@@ -16,15 +16,20 @@ export default function App() {
     localStorage.setItem("zcoffee-auth", String(isLoggedIn));
   }, [isLoggedIn]);
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem("zcoffee-auth", "false");
+  };
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={isLoggedIn ? <Navigate to="/" replace /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
-        <Route path="/" element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" replace />} />
-        <Route path="/transactions" element={isLoggedIn ? <Transactions /> : <Navigate to="/login" replace />} />
-        <Route path="/inventory" element={isLoggedIn ? <Inventory /> : <Navigate to="/login" replace />} />
-        <Route path="/customers" element={isLoggedIn ? <Customers /> : <Navigate to="/login" replace />} />
-        <Route path="/settings" element={isLoggedIn ? <Settings /> : <Navigate to="/login" replace />} />
+        <Route path="/" element={isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
+        <Route path="/transactions" element={isLoggedIn ? <Transactions onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
+        <Route path="/inventory" element={isLoggedIn ? <Inventory onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
+        <Route path="/customers" element={isLoggedIn ? <Customers onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
+        <Route path="/settings" element={isLoggedIn ? <Settings onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );

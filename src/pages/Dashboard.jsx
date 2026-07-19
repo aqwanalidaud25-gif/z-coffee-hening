@@ -3,9 +3,9 @@ import Layout from "../components/layout/Layout";
 import StatCard from "../components/dashboard/StatCard";
 import RevenueChart from "../components/dashboard/RevenueChart";
 
-export default function Dashboard() {
+export default function Dashboard({ onLogout }) {
   return (
-    <Layout>
+    <Layout onLogout={onLogout}>
       <div className="rounded-2xl border border-stone-200 bg-gradient-to-r from-stone-900 to-stone-800 p-6 text-stone-50 shadow-sm">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>

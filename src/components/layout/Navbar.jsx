@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, Bell, Search } from "lucide-react";
+import { Menu, Bell, Search, LogOut } from "lucide-react";
 import NotificationPanel from "../ui/NotificationPanel";
 
 /**
@@ -7,7 +7,7 @@ import NotificationPanel from "../ui/NotificationPanel";
  * Sticky di atas Main Area, dengan efek glassmorphism (backdrop-blur)
  * agar terasa modern saat konten discroll di belakangnya.
  */
-export default function Navbar({ onMenuClick }) {
+export default function Navbar({ onMenuClick, onLogout }) {
   const [showNotifications, setShowNotifications] = useState(false);
 
   const notifications = [
@@ -75,6 +75,15 @@ export default function Navbar({ onMenuClick }) {
             </div>
           )}
         </div>
+
+        <button
+          onClick={onLogout}
+          className="flex items-center gap-2 rounded-xl border border-stone-200 bg-white/70 px-3 py-2 text-sm font-medium text-stone-700 shadow-sm transition-colors hover:bg-white"
+          aria-label="Logout"
+        >
+          <LogOut className="h-4 w-4" />
+          Logout
+        </button>
 
         <div className="h-9 w-9 rounded-full bg-amber-600 flex items-center justify-center text-sm font-semibold text-stone-50 shadow-sm">
           AK

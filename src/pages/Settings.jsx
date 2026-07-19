@@ -1,8 +1,8 @@
 import Layout from "../components/layout/Layout";
 
-export default function Settings() {
+export default function Settings({ onLogout }) {
   return (
-    <Layout>
+    <Layout onLogout={onLogout}>
       <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
         <div>
           <p className="text-sm font-medium text-amber-600">Pengaturan</p>

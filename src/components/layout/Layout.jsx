@@ -10,7 +10,7 @@ import { useSidebar } from "../../hooks/useSidebar";
  * - Default (mobile): Sidebar disembunyikan (drawer), konten full-width.
  * - md ke atas: Sidebar tampil permanen di kiri via flex, konten mengisi sisa ruang.
  */
-export default function Layout({ children }) {
+export default function Layout({ children, onLogout }) {
   const { isOpen, close, toggle } = useSidebar();
 
   return (
@@ -19,7 +19,7 @@ export default function Layout({ children }) {
 
       {/* Main Area: flex-1 agar mengisi sisa ruang di samping sidebar */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <Navbar onMenuClick={toggle} />
+        <Navbar onMenuClick={toggle} onLogout={onLogout} />
 
         <main className="flex-1 px-4 py-6 md:px-8 md:py-8">
           {/* Grid dasar untuk konten dashboard, bisa diatur ulang per halaman */}
