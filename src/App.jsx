@@ -6,6 +6,8 @@ import Inventory from "./pages/Inventory";
 import Customers from "./pages/Customers";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
+import AbsensiKaryawan from "./pages/AbsensiKaryawan";
+import AttendanceReport from "./pages/AttendanceReport";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -26,10 +28,12 @@ export default function App() {
       <Routes>
         <Route path="/login" element={isLoggedIn ? <Navigate to="/" replace /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
         <Route path="/" element={isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
+        <Route path="/absensi" element={isLoggedIn ? <AbsensiKaryawan onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
         <Route path="/transactions" element={isLoggedIn ? <Transactions onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
         <Route path="/inventory" element={isLoggedIn ? <Inventory onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
         <Route path="/customers" element={isLoggedIn ? <Customers onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
         <Route path="/settings" element={isLoggedIn ? <Settings onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
+        <Route path="/attendance-report" element={isLoggedIn ? <AttendanceReport onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );

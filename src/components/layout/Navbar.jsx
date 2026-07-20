@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, Bell, Search, LogOut } from "lucide-react";
+import { Menu, Bell, Search, LogOut, ChevronDown } from "lucide-react";
 import NotificationPanel from "../ui/NotificationPanel";
 
 /**
@@ -9,6 +9,7 @@ import NotificationPanel from "../ui/NotificationPanel";
  */
 export default function Navbar({ onMenuClick, onLogout }) {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const notifications = [
     {
@@ -36,21 +37,19 @@ export default function Navbar({ onMenuClick, onLogout }) {
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
-          className="md:hidden rounded-lg p-2 text-stone-600 hover:bg-stone-200/60 transition-colors"
+          className="rounded-lg p-2 text-stone-600 transition-colors hover:bg-stone-200/60 md:hidden"
           aria-label="Buka menu"
         >
           <Menu className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-lg font-semibold tracking-tight text-stone-900">
-            Z Coffee Hening
-          </h1>
-          <p className="text-xs text-stone-500">Dashboard manajemen kafe • Senin, 20 Juli 2026</p>
+          <h1 className="text-lg font-semibold tracking-tight text-amber-700">Z Coffee Hening</h1>
+          <p className="text-xs text-stone-400">by NAHDA • Menemukan Tenang Disetiap Tegukan</p>
         </div>
       </div>
 
       <div className="flex items-center gap-3">
-        <div className="hidden sm:flex items-center gap-2 rounded-xl border border-stone-200 bg-white/70 px-3 py-2 shadow-sm">
+        <div className="hidden items-center gap-2 rounded-xl border border-stone-200 bg-white/70 px-3 py-2 shadow-sm sm:flex">
           <Search className="h-4 w-4 text-stone-400" />
           <input
             type="text"
@@ -76,17 +75,40 @@ export default function Navbar({ onMenuClick, onLogout }) {
           )}
         </div>
 
-        <button
-          onClick={onLogout}
-          className="flex items-center gap-2 rounded-xl border border-stone-200 bg-white/70 px-3 py-2 text-sm font-medium text-stone-700 shadow-sm transition-colors hover:bg-white"
-          aria-label="Logout"
-        >
-          <LogOut className="h-4 w-4" />
-          Logout
-        </button>
+        <div className="relative">
+          <button
+            onClick={() => setShowProfileMenu((prev) => !prev)}
+            className="flex items-center gap-2 rounded-xl border border-stone-200 bg-white/70 px-2.5 py-2 shadow-sm transition-colors hover:bg-white"
+            aria-label="Profil pengguna"
+          >
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-600 text-sm font-semibold text-stone-50 shadow-sm">
+              AK
+            </div>
+            <div className="hidden text-left sm:block">
+              <p className="text-sm font-semibold text-stone-800">Admin Kasir</p>
+              <p className="text-xs text-stone-500">manager@zcoffee.com</p>
+            </div>
+            <ChevronDown className="h-4 w-4 text-stone-500" />
+          </button>
 
-        <div className="h-9 w-9 rounded-full bg-amber-600 flex items-center justify-center text-sm font-semibold text-stone-50 shadow-sm">
-          AK
+          {showProfileMenu && (
+            <div className="absolute right-0 z-40 mt-3 w-56 rounded-2xl border border-stone-200 bg-white p-3 shadow-xl">
+              <div className="rounded-xl bg-stone-50 px-3 py-3">
+                <p className="text-sm font-semibold text-stone-900">Admin Kasir</p>
+                <p className="text-xs text-stone-500">manager@zcoffee.com</p>
+              </div>
+              <button
+                onClick={() => {
+                  setShowProfileMenu(false);
+                  onLogout?.();
+                }}
+                className="mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100"
+              >
+                <LogOut className="h-4 w-4" />
+                Keluar
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

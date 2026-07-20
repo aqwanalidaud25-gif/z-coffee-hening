@@ -4,6 +4,7 @@ import StatCard from "../components/dashboard/StatCard";
 import RevenueChart from "../components/dashboard/RevenueChart";
 
 export default function Dashboard({ onLogout }) {
+
   return (
     <Layout onLogout={onLogout}>
       <div className="rounded-2xl border border-stone-200 bg-gradient-to-r from-stone-900 to-stone-800 p-6 text-stone-50 shadow-sm">
@@ -12,7 +13,7 @@ export default function Dashboard({ onLogout }) {
             <p className="text-sm font-medium text-amber-300">Senin, 20 Juli 2026</p>
             <h2 className="mt-1 text-2xl font-semibold tracking-tight">Operasional hari ini berjalan lancar</h2>
             <p className="mt-2 max-w-2xl text-sm text-stone-300">
-              Pantau pemasukan, transaksi, dan performa menu favorit dari satu dashboard yang rapi dan profesional.
+              Pantau pemasukan, transaksi, absensi karyawan, dan performa menu favorit dari satu dashboard yang rapi dan profesional.
             </p>
           </div>
           <div className="rounded-xl border border-white/10 bg-white/10 px-4 py-3 backdrop-blur-sm">
@@ -52,6 +53,7 @@ export default function Dashboard({ onLogout }) {
         <div className="lg:col-span-2">
           <RevenueChart />
         </div>
+
         <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
           <div className="flex items-center gap-2">
             <Coffee className="h-4 w-4 text-amber-600" />

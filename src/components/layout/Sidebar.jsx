@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { Coffee, LayoutGrid, Receipt, Package, Users, Settings, X } from "lucide-react";
+import { LayoutGrid, Receipt, Package, Users, Settings, X, CalendarCheck2 } from "lucide-react";
+import logo from "../../assets/logo-zcoffeehening-removebg-preview.png";
 
 const NAV_ITEMS = [
   { label: "Ringkasan", icon: LayoutGrid, to: "/" },
+  { label: "Absensi", icon: CalendarCheck2, to: "/absensi" },
   { label: "Transaksi", icon: Receipt, to: "/transactions" },
   { label: "Inventaris", icon: Package, to: "/inventory" },
   { label: "Pelanggan", icon: Users, to: "/customers" },
@@ -39,15 +41,7 @@ export default function Sidebar({ isOpen, onClose }) {
           {/* Brand */}
           <div className="flex items-center justify-between px-6 py-6 border-b border-stone-800">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-600/90 shadow-sm">
-                <Coffee className="h-5 w-5 text-stone-50" strokeWidth={2} />
-              </span>
-              <div>
-                <p className="text-sm font-semibold tracking-tight text-stone-50">
-                  Z Coffee Hening
-                </p>
-                <p className="text-xs text-stone-400">Cafe Management</p>
-              </div>
+              <img src={logo} alt="Z Coffee Hening" className="h-12 w-auto object-contain" />
             </div>
             <button
               onClick={onClose}
@@ -56,6 +50,11 @@ export default function Sidebar({ isOpen, onClose }) {
             >
               <X className="h-5 w-5" />
             </button>
+          </div>
+
+          {/* Tagline */}
+          <div className="border-b border-stone-800 px-6 py-3">
+            <p className="text-xs font-medium text-amber-400">Menemukan Tenang Disetiap Tegukan</p>
           </div>
 
           {/* Navigation */}
