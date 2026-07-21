@@ -1,69 +1,73 @@
-# Z Coffee Hening — Dashboard Manajemen
+# Z Coffee Hening — Dashboard Manajemen Kafe
 
-Dashboard manajemen kafe dibangun dengan React.js + Tailwind CSS,
-mengikuti palet **Earthy Professional** (stone-50 / stone-900 / amber-600).
+Dashboard manajemen kafe berbasis React + Vite + Tailwind CSS, dirancang untuk membantu admin memantau operasional harian dengan tampilan yang sederhana, rapih, dan mudah dikembangkan.
 
-## Struktur Folder
+## Fitur yang tersedia
 
-```
-zcoffee-hening/
+- Dashboard utama dengan ringkasan performa kafe
+- Halaman transaksi dengan pencarian, ringkasan omzet, dan status transaksi
+- Halaman pengaturan yang bisa langsung dilihat dan diedit melalui satu tombol
+- Halaman inventaris dengan form tambah barang oleh admin
+- Halaman pelanggan dengan pencarian dan status aktivitas untuk memantau pelanggan yang jarang datang
+- Layout responsif dengan sidebar yang nyaman dipakai di desktop maupun mobile
+
+## Update terbaru
+
+Beberapa perubahan yang sudah diterapkan di aplikasi:
+
+- Menambahkan fitur riset data transaksi dengan pencarian dan ringkasan total transaksi
+- Menambahkan tombol edit pada pengaturan agar admin bisa memperbarui preferensi dengan cepat
+- Menambahkan form penambahan barang untuk admin di halaman inventaris
+- Menambahkan pencarian dan status kunjungan pelanggan untuk memudahkan identifikasi pelanggan yang sudah lama tidak datang
+
+## Struktur folder
+
+```text
+z-coffee-hening/
 ├── src/
-│   ├── assets/                 # Logo, ikon custom, gambar produk
+│   ├── assets/                 # Logo dan aset visual
 │   ├── components/
-│   │   ├── layout/
-│   │   │   ├── Layout.jsx      # Kerangka utama: Sidebar + Navbar + Main Area
-│   │   │   ├── Sidebar.jsx     # Sidebar kiri (dark, stone-900), drawer di mobile
-│   │   │   └── Navbar.jsx      # Navbar atas dengan efek glassmorphism
-│   │   ├── dashboard/
-│   │   │   ├── StatCard.jsx    # Kartu statistik (Pemasukan, Transaksi, dst)
-│   │   │   └── RevenueChart.jsx# Grafik Recharts bertema amber
-│   │   └── ui/                 # (opsional) tombol, input, badge generik
-│   ├── hooks/
-│   │   └── useSidebar.js       # State buka/tutup sidebar mobile
-│   ├── pages/
-│   │   └── Dashboard.jsx       # Halaman dashboard, merakit semua komponen
-│   └── App.jsx                 # Entry point aplikasi
-├── tailwind.config.js
-└── README.md
+│   │   ├── layout/             # Layout utama, sidebar, navbar
+│   │   ├── dashboard/         # Komponen statistik dan grafik
+│   │   └── ui/                # Komponen UI pendukung
+│   ├── hooks/                 # Custom hooks seperti state sidebar
+│   ├── pages/                 # Halaman utama: Dashboard, Transactions, Inventory, Customers, Settings
+│   ├── App.jsx                # Entry point aplikasi
+│   └── main.jsx               # Bootstrap React
+├── public/                    # File statis
+├── package.json               # Konfigurasi project dan dependency
+└── README.md                  # Dokumentasi proyek
 ```
 
-**Kenapa dipisah begini?**
-- `layout/` murni soal kerangka halaman (tidak tahu-menahu soal data bisnis).
-- `dashboard/` isinya komponen yang tahu tentang data kafe (statistik, grafik).
-- `hooks/` menyimpan logic yang bisa dipakai ulang tanpa terikat 1 komponen.
-- `pages/` adalah "perakit" — mengimpor Layout + komponen dashboard jadi 1 halaman.
+## Teknologi yang dipakai
 
-## Palet Warna
+- React 19
+- Vite
+- React Router DOM
+- Tailwind CSS
+- Recharts
+- Lucide React
 
-| Token       | Kelas Tailwind | Penggunaan                         |
-|-------------|----------------|-------------------------------------|
-| Background  | `stone-50`     | Latar belakang utama                |
-| Sidebar     | `stone-900`    | Sidebar kiri                        |
-| Aksen utama | `amber-600`    | Tombol aktif, highlight grafik      |
-| Card        | `white`        | Kartu statistik & grafik            |
-| Border      | `stone-200`    | Garis pembatas kartu, navbar        |
+## Cara menjalankan proyek
 
-## Mobile-First & Responsive Sidebar
-
-- Default (mobile): Sidebar disembunyikan (`-translate-x-full`), muncul sebagai
-  drawer dengan overlay saat tombol hamburger (ikon `Menu` dari lucide-react) ditekan.
-- `md:` ke atas: sidebar permanen terlihat (`md:translate-x-0 md:relative`), jadi
-  bagian dari `flex` layout, tidak lagi overlay.
-
-Ini menghindari pola `hidden`/`block` yang kaku — dipakai transform + transition
-supaya animasinya halus, tapi prinsipnya sama: kelas responsif Tailwind (`md:`)
-menentukan tampilan berbeda di breakpoint berbeda.
-
-## Instalasi
+Install dependency:
 
 ```bash
-npm install react react-dom recharts lucide-react
-npm install -D tailwindcss postcss autoprefixer
+npm install
 ```
 
-Tambahkan font Inter di `index.html`:
+Jalankan development server:
 
-```html
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+```bash
+npm run dev
 ```
+
+Build untuk produksi:
+
+```bash
+npm run build
+```
+
+## Catatan desain
+
+Aplikasi ini menggunakan palet warna earthy professional dengan nuansa stone dan amber agar terasa hangat, profesional, dan cocok untuk identitas kafe.
