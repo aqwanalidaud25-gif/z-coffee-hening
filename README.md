@@ -15,6 +15,13 @@ Dashboard manajemen kafe berbasis React + Vite + Tailwind CSS, dirancang untuk m
 
 Beberapa perubahan yang sudah diterapkan di aplikasi:
 
+- Menambahkan halaman login admin di route `/login` dengan validasi form kosong, loading state, error state, dan toggle show/hide password
+- Menambahkan proteksi route untuk halaman dashboard dan fitur admin agar pengguna yang belum login otomatis diarahkan ke halaman login
+- Menyimpan status login di `localStorage` agar admin tidak perlu login ulang saat refresh halaman
+- Menambahkan tombol logout dan avatar inisial admin di navbar
+- Menambahkan komponen UI dasar reusable di `src/components/ui/` untuk button, modal, dialog konfirmasi, empty state, dan skeleton loading
+- Menambahkan sistem toast global untuk notifikasi sukses, error, dan informasi
+- Menambahkan halaman 404 untuk route yang tidak dikenal
 - Menambahkan fitur riset data transaksi dengan pencarian dan ringkasan total transaksi
 - Menambahkan tombol edit pada pengaturan agar admin bisa memperbarui preferensi dengan cepat
 - Menambahkan form penambahan barang untuk admin di halaman inventaris
@@ -27,11 +34,13 @@ z-coffee-hening/
 ├── src/
 │   ├── assets/                 # Logo dan aset visual
 │   ├── components/
-│   │   ├── layout/             # Layout utama, sidebar, navbar
+│   │   ├── auth/              # Proteksi route dan autentikasi UI
 │   │   ├── dashboard/         # Komponen statistik dan grafik
-│   │   └── ui/                # Komponen UI pendukung
-│   ├── hooks/                 # Custom hooks seperti state sidebar
-│   ├── pages/                 # Halaman utama: Dashboard, Transactions, Inventory, Customers, Settings
+│   │   ├── layout/            # Layout utama, sidebar, navbar
+│   │   └── ui/                # Button, modal, toast, empty state, skeleton
+│   ├── context/               # AuthContext dan ToastContext
+│   ├── hooks/                 # Custom hooks seperti state sidebar dan absensi
+│   ├── pages/                 # Dashboard, Transactions, Inventory, Customers, Settings, Login, NotFound
 │   ├── App.jsx                # Entry point aplikasi
 │   └── main.jsx               # Bootstrap React
 ├── public/                    # File statis

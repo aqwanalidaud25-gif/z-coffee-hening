@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
@@ -8,33 +7,37 @@ import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import AbsensiKaryawan from "./pages/AbsensiKaryawan";
 import AttendanceReport from "./pages/AttendanceReport";
+import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { useAuth } from "./context/AuthContext";
+import { ToastProvider } from "./context/ToastContext";
 
-export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("zcoffee-auth") === "true";
-  });
-
-  useEffect(() => {
-    localStorage.setItem("zcoffee-auth", String(isLoggedIn));
-  }, [isLoggedIn]);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.setItem("zcoffee-auth", "false");
-  };
+function AppRoutes() {
+  const { isAuthenticated, logout } = useAuth();
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={isLoggedIn ? <Navigate to="/" replace /> : <Login onLogin={() => setIsLoggedIn(true)} />} />
-        <Route path="/" element={isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-        <Route path="/absensi" element={isLoggedIn ? <AbsensiKaryawan onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-        <Route path="/transactions" element={isLoggedIn ? <Transactions onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-        <Route path="/inventory" element={isLoggedIn ? <Inventory onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-        <Route path="/customers" element={isLoggedIn ? <Customers onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-        <Route path="/settings" element={isLoggedIn ? <Settings onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-        <Route path="/attendance-report" element={isLoggedIn ? <AttendanceReport onLogout={handleLogout} /> : <Navigate to="/login" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Dashboard onLogout={logout} />} />
+        <Route path="/absensi" element={<AbsensiKaryawan onLogout={logout} />} />
+        <Route path="/transactions" element={<Transactions onLogout={logout} />} />
+        <Route path="/inventory" element={<Inventory onLogout={logout} />} />
+        <Route path="/customers" element={<Customers onLogout={logout} />} />
+        <Route path="/settings" element={<Settings onLogout={logout} />} />
+        <Route path="/attendance-report" element={<AttendanceReport onLogout={logout} />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
+
+export default function App() {
+  return (
+    <ToastProvider>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </ToastProvider>
   );
 }

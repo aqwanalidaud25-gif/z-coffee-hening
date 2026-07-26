@@ -1,21 +1,33 @@
 import { useState } from "react";
-import { Coffee, ShieldCheck, ArrowRight } from "lucide-react";
+import { Coffee, ShieldCheck, ArrowRight, Eye, EyeOff, LoaderCircle } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-export default function Login({ onLogin }) {
+export default function Login() {
   const [email, setEmail] = useState("admin@zcoffee.id");
   const [password, setPassword] = useState("password123");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    if (email === "admin@zcoffee.id" && password === "password123") {
-      setError("");
-      onLogin?.();
-      return;
+    await new Promise((resolve) => setTimeout(resolve, 700));
+
+    const success = login({ email, password });
+
+    if (success) {
+      navigate("/", { replace: true });
+    } else {
+      setError("Email atau password salah. Coba admin@zcoffee.id dan password123.");
     }
 
-    setError("Email atau password salah. Coba admin@zcoffee.id dan password123.");
+    setLoading(false);
   };
 
   return (
@@ -63,12 +75,22 @@ export default function Login({ onLogin }) {
               </div>
               <div>
                 <label className="mb-2 block text-sm font-medium text-stone-700">Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm outline-none ring-0 focus:border-amber-500"
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 pr-11 text-sm outline-none ring-0 focus:border-amber-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-500"
+                    aria-label="Toggle password visibility"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
 
               {error ? (
@@ -77,10 +99,20 @@ export default function Login({ onLogin }) {
 
               <button
                 type="submit"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-amber-700"
+                disabled={loading}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-amber-700 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                Masuk ke Dashboard
-                <ArrowRight className="h-4 w-4" />
+                {loading ? (
+                  <>
+                    <LoaderCircle className="h-4 w-4 animate-spin" />
+                    Memproses...
+                  </>
+                ) : (
+                  <>
+                    Masuk ke Dashboard
+                    <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
               </button>
             </form>
 
