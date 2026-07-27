@@ -9,6 +9,20 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Design tokens */
+  --amber-50: #fff7ed;
+  --amber-100: #ffedd5;
+  --amber-500: #f59e0b;
+  --amber-600: #d97706;
+  --amber-700: #b45309;
+
+  --stone-50: #fafaf9;
+  --stone-100: #f5f5f4;
+  --stone-200: #e7e5e4;
+  --stone-400: #a8a29e;
+  --stone-500: #78716c;
+  --stone-700: #374151;
+  --stone-900: #111827;
 }
 
 html {
