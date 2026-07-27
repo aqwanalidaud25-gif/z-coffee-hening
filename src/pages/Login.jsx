@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Coffee, ShieldCheck, ArrowRight, Eye, EyeOff, LoaderCircle } from "lucide-react";
+import logo from "../assets/logo-Zcoffee-Hening-rb.png";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -35,9 +36,8 @@ export default function Login() {
       <div className="w-full max-w-5xl overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-[0_25px_80px_-25px_rgba(41,37,36,0.35)]">
         <div className="grid md:grid-cols-[1.05fr_0.95fr]">
           <div className="bg-stone-900 p-8 text-stone-50 md:p-10">
-            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-sm text-stone-200">
-              <Coffee className="h-4 w-4 text-amber-400" />
-              Z Coffee Hening
+            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/10 px-3 py-2">
+              <img src={logo} alt="Z Coffee Hening" className="h-12 w-auto md:h-16 object-contain" />
             </div>
             <h1 className="mt-6 text-3xl font-semibold tracking-tight">Kelola kafe dengan tenang.</h1>
             <p className="mt-3 text-sm leading-6 text-stone-300">

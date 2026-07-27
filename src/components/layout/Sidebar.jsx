@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { LayoutGrid, Receipt, Package, Users, Settings, X, CalendarCheck2 } from "lucide-react";
-import logo from "../../assets/logo-zcoffeehening-removebg-preview.png";
 
 const NAV_ITEMS = [
   { label: "Ringkasan", icon: LayoutGrid, to: "/" },
@@ -39,13 +38,14 @@ export default function Sidebar({ isOpen, onClose }) {
       >
         <div className="flex h-full flex-col">
           {/* Brand */}
-          <div className="flex items-center justify-between px-6 py-6 border-b border-stone-800">
-            <div className="flex items-center gap-3">
-              <img src={logo} alt="Z Coffee Hening" className="h-12 w-auto object-contain" />
+          <div className="flex items-center justify-between border-b border-stone-800 px-6 py-6">
+            <div className="flex flex-col">
+              <span className="text-lg font-semibold uppercase tracking-[0.24em] text-amber-400">Z Coffee</span>
+              <span className="text-sm font-medium uppercase tracking-[0.32em] text-stone-400">Hening</span>
             </div>
             <button
               onClick={onClose}
-              className="md:hidden text-stone-400 hover:text-stone-50 transition-colors"
+              className="text-stone-400 transition-colors hover:text-stone-50 md:hidden"
               aria-label="Tutup menu"
             >
               <X className="h-5 w-5" />

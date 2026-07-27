@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu, Bell, Search, LogOut, ChevronDown } from "lucide-react";
 import NotificationPanel from "../ui/NotificationPanel";
 import { useAuth } from "../../context/AuthContext";
+import logo from "../../assets/logo-Zcoffee-Hening-rb.png";
 
 /**
  * Navbar
@@ -29,13 +30,7 @@ export default function Navbar({ onMenuClick, onLogout }) {
   ];
 
   return (
-    <header
-      className="
-        sticky top-0 z-30 flex items-center justify-between gap-4
-        border-b border-stone-200/70 bg-stone-50/70 px-4 py-4
-        backdrop-blur-md md:px-8
-      "
-    >
+    <header className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-stone-200/70 bg-stone-50/70 px-4 py-3 backdrop-blur-md md:px-8">
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
@@ -44,9 +39,13 @@ export default function Navbar({ onMenuClick, onLogout }) {
         >
           <Menu className="h-5 w-5" />
         </button>
-        <div>
-          <h1 className="text-lg font-semibold tracking-tight text-amber-700">Z Coffee Hening</h1>
-          <p className="text-xs text-stone-400">by NAHDA • Menemukan Tenang Disetiap Tegukan</p>
+
+        <div className="flex items-center gap-4 rounded-2xl border border-amber-100 bg-gradient-to-r from-amber-50 to-orange-50 px-4 py-3 shadow-sm">
+          <img
+            src={logo}
+            alt="Logo Z Coffee Hening"
+            className="h-12 w-12 md:h-14 md:w-14 object-contain"
+          />
         </div>
       </div>
 
