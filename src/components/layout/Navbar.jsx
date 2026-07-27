@@ -34,7 +34,7 @@ export default function Navbar({ onMenuClick, onLogout }) {
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
-          className="rounded-lg p-2 text-stone-600 transition-colors hover:bg-stone-200/60 md:hidden"
+          className="rounded-lg p-2 text-stone-600 transition-colors hover:bg-stone-200/60 md:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50"
           aria-label="Buka menu"
         >
           <Menu className="h-5 w-5" />
@@ -50,20 +50,22 @@ export default function Navbar({ onMenuClick, onLogout }) {
       </div>
 
       <div className="flex items-center gap-3">
-        <div className="hidden items-center gap-2 rounded-xl border border-stone-200 bg-white/70 px-3 py-2 shadow-sm sm:flex">
+          <div className="hidden items-center gap-2 rounded-xl border border-stone-200 bg-white/70 px-3 py-2 shadow-sm sm:flex">
           <Search className="h-4 w-4 text-stone-400" />
           <input
             type="text"
             placeholder="Cari transaksi, menu..."
-            className="w-40 bg-transparent text-sm text-stone-700 placeholder:text-stone-400 focus:outline-none lg:w-56"
+            aria-label="Cari"
+            className="w-40 bg-transparent text-sm text-stone-700 placeholder:text-stone-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 lg:w-56"
           />
         </div>
 
         <div className="relative">
           <button
             onClick={() => setShowNotifications((prev) => !prev)}
-            className="relative rounded-xl border border-stone-200 bg-white/70 p-2.5 shadow-sm transition-colors hover:bg-white"
+            className="relative rounded-xl border border-stone-200 bg-white/70 p-2.5 shadow-sm transition-colors hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
             aria-label="Notifikasi"
+            aria-expanded={showNotifications}
           >
             <Bell className="h-4 w-4 text-stone-600" />
             <span className="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-amber-600 ring-2 ring-stone-50" />
@@ -79,8 +81,9 @@ export default function Navbar({ onMenuClick, onLogout }) {
         <div className="relative">
           <button
             onClick={() => setShowProfileMenu((prev) => !prev)}
-            className="flex items-center gap-2 rounded-xl border border-stone-200 bg-white/70 px-2.5 py-2 shadow-sm transition-colors hover:bg-white"
+            className="flex items-center gap-2 rounded-xl border border-stone-200 bg-white/70 px-2.5 py-2 shadow-sm transition-colors hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
             aria-label="Profil pengguna"
+            aria-expanded={showProfileMenu}
           >
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-600 text-sm font-semibold text-stone-50 shadow-sm">
               {user?.initials || "AK"}
@@ -104,7 +107,8 @@ export default function Navbar({ onMenuClick, onLogout }) {
                   logout();
                   onLogout?.();
                 }}
-                className="mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100"
+                className="mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+                aria-label="Keluar dari akun"
               >
                 <LogOut className="h-4 w-4" />
                 Keluar

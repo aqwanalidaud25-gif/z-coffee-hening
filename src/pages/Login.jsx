@@ -66,21 +66,27 @@ export default function Login() {
             <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label className="mb-2 block text-sm font-medium text-stone-700">Email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm outline-none ring-0 focus:border-amber-500"
-                />
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    aria-label="Email"
+                    required
+                    className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm outline-none ring-0 focus:border-amber-500 focus-visible:ring-2 focus-visible:ring-amber-500"
+                  />
               </div>
               <div>
                 <label className="mb-2 block text-sm font-medium text-stone-700">Password</label>
                 <div className="relative">
                   <input
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 pr-11 text-sm outline-none ring-0 focus:border-amber-500"
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      aria-label="Password"
+                      required
+                      className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 pr-11 text-sm outline-none ring-0 focus:border-amber-500 focus-visible:ring-2 focus-visible:ring-amber-500"
                   />
                   <button
                     type="button"
@@ -94,7 +100,7 @@ export default function Login() {
               </div>
 
               {error ? (
-                <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">{error}</p>
+                <p id="login-error" role="alert" className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">{error}</p>
               ) : null}
 
               <button

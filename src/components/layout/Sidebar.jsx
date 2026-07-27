@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { LayoutGrid, Receipt, Package, Users, Settings, X, CalendarCheck2 } from "lucide-react";
+import logo from "../../assets/logo-Zcoffee-Hening-rb.png";
 
 const NAV_ITEMS = [
   { label: "Ringkasan", icon: LayoutGrid, to: "/" },
@@ -30,7 +31,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
       <aside
         className={`
-          fixed inset-y-0 left-0 z-50 w-64 bg-stone-900 text-stone-200
+          fixed inset-y-0 left-0 z-50 w-56 md:w-64 bg-stone-900 text-stone-200
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:relative md:translate-x-0 md:flex md:flex-col md:shrink-0
@@ -38,10 +39,13 @@ export default function Sidebar({ isOpen, onClose }) {
       >
         <div className="flex h-full flex-col">
           {/* Brand */}
-          <div className="flex items-center justify-between border-b border-stone-800 px-6 py-6">
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold uppercase tracking-[0.24em] text-amber-400">Z Coffee</span>
-              <span className="text-sm font-medium uppercase tracking-[0.32em] text-stone-400">Hening</span>
+          <div className="flex items-center justify-between border-b border-stone-800 px-4 py-4">
+            <div className="flex items-center gap-3">
+              <img src={logo} alt="Z Coffee Hening" className="h-10 w-auto object-contain" />
+              <div className="hidden md:flex flex-col">
+                <span className="text-lg font-semibold uppercase tracking-[0.24em] text-amber-400">Z Coffee</span>
+                <span className="text-sm font-medium uppercase tracking-[0.32em] text-stone-400">Hening</span>
+              </div>
             </div>
             <button
               onClick={onClose}
@@ -58,7 +62,7 @@ export default function Sidebar({ isOpen, onClose }) {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 space-y-1 px-3 py-6">
+          <nav className="flex-1 space-y-1 px-3 py-6" aria-label="Navigasi utama">
             {NAV_ITEMS.map(({ label, icon: Icon, to }) => (
               <NavLink
                 key={label}

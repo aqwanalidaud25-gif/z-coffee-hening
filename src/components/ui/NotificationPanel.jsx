@@ -2,7 +2,7 @@ import { Bell, CheckCircle2, AlertTriangle, Sparkles } from "lucide-react";
 
 export default function NotificationPanel({ notifications = [] }) {
   return (
-    <div className="w-80 rounded-2xl border border-stone-200 bg-white p-4 shadow-xl">
+    <div className="w-80 rounded-2xl border border-stone-200 bg-white p-4 shadow-xl" role="region" aria-label="Pusat notifikasi">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Bell className="h-4 w-4 text-amber-600" />
@@ -15,7 +15,7 @@ export default function NotificationPanel({ notifications = [] }) {
 
       <div className="mt-4 space-y-2">
         {notifications.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-stone-200 bg-stone-50 px-3 py-4 text-sm text-stone-500">
+          <div className="rounded-xl border border-dashed border-stone-200 bg-stone-50 px-3 py-4 text-sm text-stone-500" role="status" aria-live="polite">
             Tidak ada notifikasi baru untuk saat ini.
           </div>
         ) : (
