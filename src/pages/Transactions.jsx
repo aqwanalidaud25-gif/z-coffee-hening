@@ -1,5 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
+import Skeleton from "../components/ui/Skeleton";
+import EmptyState from "../components/ui/EmptyState";
 
 const transactionsData = [
   { id: "#1024", customer: "Alya", total: 96000, status: "Selesai", date: "22 Jul 2026", payment: "QRIS", items: 3 },
@@ -24,6 +26,12 @@ function formatRupiah(value) {
 
 export default function Transactions({ onLogout }) {
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(t);
+  }, []);
 
   const filteredTransactions = useMemo(() => {
     const keyword = search.toLowerCase();
@@ -93,8 +101,11 @@ export default function Transactions({ onLogout }) {
             <div>Status</div>
             <div>Total</div>
           </div>
-
-          {filteredTransactions.length > 0 ? (
+          {loading ? (
+            <div className="p-4">
+              <Skeleton type="table-row" count={4} />
+            </div>
+          ) : filteredTransactions.length > 0 ? (
             filteredTransactions.map((item) => (
               <div key={item.id} className="grid border-t border-stone-200 bg-white px-4 py-4 text-sm md:grid-cols-[1.2fr_1fr_0.9fr_0.8fr]">
                 <div>
@@ -117,8 +128,8 @@ export default function Transactions({ onLogout }) {
               </div>
             ))
           ) : (
-            <div className="bg-white p-4 text-sm text-stone-500">
-              Tidak ada transaksi yang sesuai pencarian.
+            <div className="p-4">
+              <EmptyState title="Tidak ada transaksi" description="Tidak ditemukan transaksi yang sesuai pencarian." />
             </div>
           )}
         </div>

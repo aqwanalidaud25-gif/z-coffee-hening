@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import React from "react";
 import { Bell, CheckCircle2, AlertTriangle, Sparkles } from "lucide-react";
 
 export default function NotificationPanel({ notifications = [] }) {

@@ -1,24 +1,23 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+/* eslint-disable react-refresh/only-export-components */
+// eslint-disable-next-line no-unused-vars
+import React from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const savedUser = localStorage.getItem("zcoffee-user");
-
+  const [user, setUser] = useState(() => {
+    const savedUser = typeof window !== 'undefined' ? localStorage.getItem('zcoffee-user') : null;
     if (savedUser) {
       try {
-        setUser(JSON.parse(savedUser));
+        return JSON.parse(savedUser);
       } catch {
-        localStorage.removeItem("zcoffee-user");
+        if (typeof window !== 'undefined') localStorage.removeItem('zcoffee-user');
       }
     }
-
-    setLoading(false);
-  }, []);
+    return null;
+  });
+  const [loading] = useState(false);
 
   const login = (credentials) => {
     if (credentials.email === "admin@zcoffee.id" && credentials.password === "password123") {

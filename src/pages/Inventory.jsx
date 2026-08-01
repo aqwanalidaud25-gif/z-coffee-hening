@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
+import Skeleton from "../components/ui/Skeleton";
+import EmptyState from "../components/ui/EmptyState";
 
 const initialInventory = [
   { item: "Kopi Arabika", stock: "48 kg", status: "Aman" },
@@ -9,6 +11,12 @@ const initialInventory = [
 
 export default function Inventory({ onLogout }) {
   const [items, setItems] = useState(initialInventory);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(t);
+  }, []);
   const [form, setForm] = useState({ item: "", stock: "", status: "Aman" });
 
   const handleAddItem = (event) => {
@@ -75,18 +83,24 @@ export default function Inventory({ onLogout }) {
         </form>
 
         <div className="mt-6 space-y-3">
-          {items.map((entry) => (
-            <div key={`${entry.item}-${entry.stock}`} className="flex items-center justify-between rounded-xl border border-stone-200 bg-stone-50 px-4 py-3">
-              <div>
-                <p className="font-medium text-stone-900">{entry.item}</p>
-                <p className="text-sm text-stone-500">Stok saat ini</p>
+          {loading ? (
+            <Skeleton count={3} />
+          ) : items.length === 0 ? (
+            <EmptyState title="Inventaris kosong" description="Belum ada item terdaftar." />
+          ) : (
+            items.map((entry) => (
+              <div key={`${entry.item}-${entry.stock}`} className="flex items-center justify-between rounded-xl border border-stone-200 bg-stone-50 px-4 py-3">
+                <div>
+                  <p className="font-medium text-stone-900">{entry.item}</p>
+                  <p className="text-sm text-stone-500">Stok saat ini</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-semibold text-stone-900">{entry.stock}</p>
+                  <p className="text-sm text-amber-700">{entry.status}</p>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="font-semibold text-stone-900">{entry.stock}</p>
-                <p className="text-sm text-amber-700">{entry.status}</p>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </Layout>

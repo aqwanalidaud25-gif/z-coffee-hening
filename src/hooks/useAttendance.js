@@ -34,7 +34,8 @@ export default function useAttendance() {
   }, []);
 
   useEffect(() => {
-    loadInitialData();
+    const t = setTimeout(() => loadInitialData(), 0);
+    return () => clearTimeout(t);
   }, [loadInitialData]);
 
   const verifyPin = useCallback(async ({ employeeId, pin }) => {

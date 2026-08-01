@@ -1,6 +1,9 @@
+// eslint-disable-next-line no-unused-vars
+import React from "react";
 import { useState } from "react";
-import { Coffee, ShieldCheck, ArrowRight, Eye, EyeOff, LoaderCircle } from "lucide-react";
+import { ShieldCheck, ArrowRight, Eye, EyeOff } from "lucide-react";
 import logo from "../assets/logo-Zcoffee-Hening-rb.png";
+import Button from "../components/ui/Button";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -16,8 +19,19 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
+    // Client-side validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Masukkan email yang valid.");
+      return;
+    }
 
+    if (password.length < 6) {
+      setError("Password minimal 6 karakter.");
+      return;
+    }
+
+    setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 700));
 
     const success = login({ email, password });
@@ -63,7 +77,7 @@ export default function Login() {
             <h2 className="mt-2 text-2xl font-semibold text-stone-900">Selamat datang, Admin</h2>
             <p className="mt-2 text-sm text-stone-500">Masukkan kredensial Anda untuk melanjutkan.</p>
 
-            <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+            <form className="mt-6 space-y-4" onSubmit={handleSubmit} noValidate>
               <div>
                 <label className="mb-2 block text-sm font-medium text-stone-700">Email</label>
                   <input
@@ -103,23 +117,14 @@ export default function Login() {
                 <p id="login-error" role="alert" className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">{error}</p>
               ) : null}
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-amber-700 disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                {loading ? (
-                  <>
-                    <LoaderCircle className="h-4 w-4 animate-spin" />
-                    Memproses...
-                  </>
-                ) : (
+              <Button type="submit" loading={loading} className="w-full flex items-center justify-center">
+                {loading ? 'Memproses...' : (
                   <>
                     Masuk ke Dashboard
                     <ArrowRight className="h-4 w-4" />
                   </>
                 )}
-              </button>
+              </Button>
             </form>
 
             <p className="mt-5 text-center text-xs text-stone-500">
