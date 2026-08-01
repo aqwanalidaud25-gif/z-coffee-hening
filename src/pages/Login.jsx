@@ -46,7 +46,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top_left,_rgba(245,158,11,0.18),_transparent_35%),linear-gradient(135deg,_#f8f5ed_0%,_#f5f5f4_100%)] px-4 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top_left,_rgba(166,109,35,0.16),_transparent_35%),linear-gradient(135deg,_#f8f3e9_0%,_#f1e8db_100%)] px-4 py-10">
       <div className="w-full max-w-5xl overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-[0_25px_80px_-25px_rgba(41,37,36,0.35)]">
         <div className="grid md:grid-cols-[1.05fr_0.95fr]">
           <div className="bg-stone-900 p-8 text-stone-50 md:p-10">

@@ -42,11 +42,11 @@ export default function Navbar({ onMenuClick, onLogout }) {
           <Menu className="h-5 w-5" />
         </button>
 
-        <div className="flex items-center gap-4 rounded-2xl border border-amber-100 bg-gradient-to-r from-amber-50 to-orange-50 px-4 py-3 shadow-sm">
+        <div className="flex items-center">
           <img
             src={logo}
             alt="Logo Z Coffee Hening"
-            className="h-12 w-12 md:h-14 md:w-14 object-contain"
+            className="h-12 w-12 object-contain md:h-16 md:w-43"
           />
         </div>
       </div>

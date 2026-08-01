@@ -3,37 +3,41 @@
 
 :root {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: #1c1917;
-  background-color: #fafaf9;
+  color: #211d1a;
+  background-color: #f8f4eb;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* Design tokens */
-  --amber-50: #fff7ed;
-  --amber-100: #ffedd5;
-  --amber-500: #f59e0b;
-  --amber-600: #d97706;
-  --amber-700: #b45309;
+  --amber-50: #f8efe0;
+  --amber-100: #ead6b0;
+  --amber-500: #a66d23;
+  --amber-600: #8b5620;
+  --amber-700: #70451b;
 
-  --stone-50: #fafaf9;
-  --stone-100: #f5f5f4;
-  --stone-200: #e7e5e4;
-  --stone-400: #a8a29e;
-  --stone-500: #78716c;
-  --stone-700: #374151;
-  --stone-900: #111827;
+  --stone-50: #f8f4eb;
+  --stone-100: #efe6d8;
+  --stone-200: #dccfb8;
+  --stone-400: #8f8174;
+  --stone-500: #6d6259;
+  --stone-700: #453d36;
+  --stone-900: #231f1b;
+
+  --surface: #fcfaf7;
+  --surface-strong: #f3ebde;
+  --accent-glow: rgba(166, 109, 35, 0.16);
 }
 
 html {
-  background-color: #fafaf9;
+  background-color: var(--surface);
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8f5ed 0%, #f5f5f4 100%);
+  background: linear-gradient(135deg, var(--surface-strong) 0%, var(--surface) 100%);
 }
 
 #root {

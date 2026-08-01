@@ -1,31 +1,33 @@
 # Z Coffee Hening — Dashboard Manajemen Kafe
 
-Dashboard manajemen kafe berbasis React + Vite + Tailwind CSS, dirancang untuk membantu admin memantau operasional harian dengan tampilan yang sederhana, rapih, dan mudah dikembangkan.
+Dashboard manajemen kafe berbasis React, Vite, Tailwind CSS, dan React Router yang dirancang untuk membantu admin memantau operasional harian dengan tampilan yang modern, profesional, dan mudah dikembangkan.
 
 ## Fitur yang tersedia
 
-- Dashboard utama dengan ringkasan performa kafe
+- Dashboard utama dengan ringkasan performa kafe dan elemen visual yang lebih polished
+- Halaman absensi karyawan dengan verifikasi PIN, status hadir/izin/telat, dan UI yang siap dipakai
+- Halaman laporan absensi untuk melihat rekapan harian dan bulanan secara terstruktur
 - Halaman transaksi dengan pencarian, ringkasan omzet, dan status transaksi
-- Halaman pengaturan yang bisa langsung dilihat dan diedit melalui satu tombol
 - Halaman inventaris dengan form tambah barang oleh admin
 - Halaman pelanggan dengan pencarian dan status aktivitas untuk memantau pelanggan yang jarang datang
-- Layout responsif dengan sidebar yang nyaman dipakai di desktop maupun mobile
+- Halaman pengaturan yang dapat diakses dengan cepat dari sidebar
+- Layout responsif dengan sidebar, navbar, dan elemen UI yang nyaman dipakai di desktop maupun mobile
+- Sistem autentikasi sederhana dengan proteksi route dan toast notifikasi global
 
 ## Update terbaru
 
 Beberapa perubahan yang sudah diterapkan di aplikasi:
 
-- Menambahkan halaman login admin di route `/login` dengan validasi form kosong, loading state, error state, dan toggle show/hide password
-- Menambahkan proteksi route untuk halaman dashboard dan fitur admin agar pengguna yang belum login otomatis diarahkan ke halaman login
-- Menyimpan status login di `localStorage` agar admin tidak perlu login ulang saat refresh halaman
-- Menambahkan tombol logout dan avatar inisial admin di navbar
-- Menambahkan komponen UI dasar reusable di `src/components/ui/` untuk button, modal, dialog konfirmasi, empty state, dan skeleton loading
-- Menambahkan sistem toast global untuk notifikasi sukses, error, dan informasi
+- Menambahkan halaman login admin dengan validasi form, loading state, error state, dan toggle show/hide password
+- Menambahkan proteksi route agar halaman admin otomatis diarahkan ke halaman login saat belum terautentikasi
+- Menyimpan status login di localStorage agar sesi tetap aman saat refresh halaman
+- Menambahkan navbar dengan notifikasi, profil admin, dan tombol logout
+- Menambahkan komponen UI reusable seperti button, modal, dialog konfirmasi, empty state, skeleton, dan panel notifikasi
 - Menambahkan halaman 404 untuk route yang tidak dikenal
-- Menambahkan fitur riset data transaksi dengan pencarian dan ringkasan total transaksi
-- Menambahkan tombol edit pada pengaturan agar admin bisa memperbarui preferensi dengan cepat
-- Menambahkan form penambahan barang untuk admin di halaman inventaris
-- Menambahkan pencarian dan status kunjungan pelanggan untuk memudahkan identifikasi pelanggan yang sudah lama tidak datang
+- Menambahkan halaman absensi dan laporan absensi untuk operasional harian
+- Menambahkan fitur pencarian dan ringkasan transaksi, inventaris, serta pelanggan
+- Menambahkan desain token warna dan visual system yang lebih profesional dan konsisten
+- Menambahkan uji komponen dasar dengan Vitest dan Testing Library
 
 ## Struktur folder
 
@@ -40,22 +42,24 @@ z-coffee-hening/
 │   │   └── ui/                # Button, modal, toast, empty state, skeleton
 │   ├── context/               # AuthContext dan ToastContext
 │   ├── hooks/                 # Custom hooks seperti state sidebar dan absensi
-│   ├── pages/                 # Dashboard, Transactions, Inventory, Customers, Settings, Login, NotFound
+│   ├── pages/                 # Dashboard, Absensi, Laporan Absensi, Transactions, Inventory, Customers, Settings, Login, NotFound
 │   ├── App.jsx                # Entry point aplikasi
 │   └── main.jsx               # Bootstrap React
-├── public/                    # File statis
+├── public/                    # File statis dan aset publik
 ├── package.json               # Konfigurasi project dan dependency
+├── vitest.config.js           # Konfigurasi test engine
 └── README.md                  # Dokumentasi proyek
 ```
 
 ## Teknologi yang dipakai
 
 - React 19
-- Vite
-- React Router DOM
-- Tailwind CSS
+- Vite 8
+- React Router DOM 7
+- Tailwind CSS 4
 - Recharts
 - Lucide React
+- Vitest + Testing Library
 
 ## Cara menjalankan proyek
 
@@ -77,6 +81,12 @@ Build untuk produksi:
 npm run build
 ```
 
+Jalankan uji komponen:
+
+```bash
+npm run test:run
+```
+
 ## Catatan desain
 
-Aplikasi ini menggunakan palet warna earthy professional dengan nuansa stone dan amber agar terasa hangat, profesional, dan cocok untuk identitas kafe.
+Aplikasi ini menggunakan palet warna earthy professional dengan nuansa stone dan amber yang lebih gelap, hangat, dan konsisten agar terasa elegan dan cocok untuk identitas kafe modern.

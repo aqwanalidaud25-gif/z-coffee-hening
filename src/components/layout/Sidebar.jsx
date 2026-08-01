@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { LayoutGrid, Receipt, Package, Users, Settings, X, CalendarCheck2 } from "lucide-react";
-import logo from "../../assets/logo-Zcoffee-Hening-rb.png";
+import { LayoutGrid, Receipt, Package, Users, Settings, X, CalendarCheck2, BarChart3 } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "Ringkasan", icon: LayoutGrid, to: "/" },
+  { label: "Dashboard", icon: LayoutGrid, to: "/" },
   { label: "Absensi", icon: CalendarCheck2, to: "/absensi" },
+  { label: "Laporan Absensi", icon: BarChart3, to: "/attendance-report" },
   { label: "Transaksi", icon: Receipt, to: "/transactions" },
   { label: "Inventaris", icon: Package, to: "/inventory" },
   { label: "Pelanggan", icon: Users, to: "/customers" },
@@ -40,12 +40,9 @@ export default function Sidebar({ isOpen, onClose }) {
         <div className="flex h-full flex-col">
           {/* Brand */}
           <div className="flex items-center justify-between border-b border-stone-800 px-4 py-4">
-            <div className="flex items-center gap-3">
-              <img src={logo} alt="Z Coffee Hening" className="h-10 w-auto object-contain" />
-              <div className="hidden md:flex flex-col">
-                <span className="text-lg font-semibold uppercase tracking-[0.24em] text-amber-400">Z Coffee</span>
-                <span className="text-sm font-medium uppercase tracking-[0.32em] text-stone-400">Hening</span>
-              </div>
+            <div className="hidden md:flex flex-col">
+              <span className="text-lg font-semibold uppercase tracking-[0.24em] text-amber-400">Z Coffee</span>
+              <span className="text-sm font-medium uppercase tracking-[0.32em] text-stone-400">Hening</span>
             </div>
             <button
               onClick={onClose}
