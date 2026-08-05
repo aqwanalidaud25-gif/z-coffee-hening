@@ -3,30 +3,31 @@
 
 :root {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: #211d1a;
-  background-color: #f8f4eb;
+  color: #1f1a16;
+  background-color: #f4ede5;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* Design tokens */
-  --amber-50: #f8efe0;
-  --amber-100: #ead6b0;
-  --amber-500: #a66d23;
-  --amber-600: #8b5620;
-  --amber-700: #70451b;
+  --amber-50: #f9efe3;
+  --amber-100: #f2dbc3;
+  --amber-500: #b3804a;
+  --amber-600: #9d6b34;
+  --amber-700: #7f5529;
 
-  --stone-50: #f8f4eb;
-  --stone-100: #efe6d8;
-  --stone-200: #dccfb8;
-  --stone-400: #8f8174;
-  --stone-500: #6d6259;
-  --stone-700: #453d36;
-  --stone-900: #231f1b;
+  --stone-50: #f5f0ea;
+  --stone-100: #e8dfd6;
+  --stone-200: #d4c8b9;
+  --stone-400: #907f74;
+  --stone-500: #73645a;
+  --stone-700: #4a4038;
+  --stone-900: #1f1a16;
 
-  --surface: #fcfaf7;
-  --surface-strong: #f3ebde;
-  --accent-glow: rgba(166, 109, 35, 0.16);
+  --surface: #f2ece4;
+  --surface-strong: #e7ddd1;
+  --border: #d9c9b9;
+  --shadow: 0 18px 48px rgba(31, 24, 19, 0.08);
 }
 
 html {
@@ -38,6 +39,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background: linear-gradient(135deg, var(--surface-strong) 0%, var(--surface) 100%);
+  color: var(--stone-900);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 #root {
@@ -46,4 +49,35 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 100, 81, 0.4);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(248, 243, 235, 0.8);
 }

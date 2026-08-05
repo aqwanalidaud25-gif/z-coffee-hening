@@ -46,25 +46,29 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top_left,_rgba(166,109,35,0.16),_transparent_35%),linear-gradient(135deg,_#f8f3e9_0%,_#f1e8db_100%)] px-4 py-10">
-      <div className="w-full max-w-5xl overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-[0_25px_80px_-25px_rgba(41,37,36,0.35)]">
-        <div className="grid md:grid-cols-[1.05fr_0.95fr]">
-          <div className="bg-stone-900 p-8 text-stone-50 md:p-10">
-            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/10 px-3 py-2">
+    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top_left,_rgba(166,109,35,0.12),_transparent_30%),linear-gradient(135deg,_#efebe3_0%,_#f6f0e8_100%)] px-4 py-10">
+      <div className="w-full max-w-4xl overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-[var(--shadow)]">
+        <div className="grid gap-6 md:grid-cols-[1.05fr_0.95fr]">
+          <div className="bg-stone-950 p-8 text-stone-50 md:p-10">
+            <div className="inline-flex items-center gap-3 rounded-full border border-stone-700 bg-white/5 px-4 py-2.5">
               <img src={logo} alt="Z Coffee Hening" className="h-12 w-auto md:h-16 object-contain" />
+              <div className="hidden md:block text-left">
+                <p className="text-xs uppercase tracking-[0.3em] text-amber-300">Z Coffee</p>
+                <p className="text-xs uppercase tracking-[0.3em] text-stone-400">Hening</p>
+              </div>
             </div>
-            <h1 className="mt-6 text-3xl font-semibold tracking-tight">Kelola kafe dengan tenang.</h1>
-            <p className="mt-3 text-sm leading-6 text-stone-300">
-              Pantau transaksi, stok, dan pelanggan dari satu dashboard yang bersih, profesional, dan mudah dipakai.
+            <h1 className="mt-8 text-4xl font-semibold tracking-tight text-white">Kelola kafe dengan lebih terkontrol.</h1>
+            <p className="mt-4 max-w-md text-sm leading-7 text-stone-300">
+              Pantau pemasukan, kelola stok, dan layani pelanggan dengan dashboard yang terasa premium dan siap dipakai.
             </p>
 
-            <div className="mt-8 space-y-3 rounded-2xl border border-white/10 bg-white/10 p-4">
+            <div className="mt-10 space-y-3 rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
               {[
                 "Pantau penjualan real-time",
-                "Terima notifikasi stok dan transaksi",
-                "Akses dashboard dari desktop maupun mobile",
+                "Notifikasi stok dan transaksi penting",
+                "Layout responsif untuk desktop dan tablet",
               ].map((item) => (
-                <div key={item} className="flex items-center gap-2 text-sm text-stone-200">
+                <div key={item} className="flex items-center gap-3 text-sm text-stone-200">
                   <ShieldCheck className="h-4 w-4 text-amber-400" />
                   {item}
                 </div>
@@ -87,7 +91,7 @@ export default function Login() {
                     onChange={(e) => setEmail(e.target.value)}
                     aria-label="Email"
                     required
-                    className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm outline-none ring-0 focus:border-amber-500 focus-visible:ring-2 focus-visible:ring-amber-500"
+                    className="w-full rounded-[1.25rem] border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-900 outline-none transition focus:border-amber-400 focus-visible:ring-2 focus-visible:ring-amber-300"
                   />
               </div>
               <div>
@@ -100,7 +104,7 @@ export default function Login() {
                       onChange={(e) => setPassword(e.target.value)}
                       aria-label="Password"
                       required
-                      className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 pr-11 text-sm outline-none ring-0 focus:border-amber-500 focus-visible:ring-2 focus-visible:ring-amber-500"
+                      className="w-full rounded-[1.25rem] border border-stone-200 bg-stone-50 px-4 py-3 pr-12 text-sm text-stone-900 outline-none transition focus:border-amber-400 focus-visible:ring-2 focus-visible:ring-amber-300"
                   />
                   <button
                     type="button"
@@ -114,10 +118,10 @@ export default function Login() {
               </div>
 
               {error ? (
-                <p id="login-error" role="alert" className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">{error}</p>
+                <p id="login-error" role="alert" className="rounded-[1.25rem] border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">{error}</p>
               ) : null}
 
-              <Button type="submit" loading={loading} className="w-full flex items-center justify-center">
+              <Button type="submit" loading={loading} className="w-full flex items-center justify-center rounded-[1.25rem]">
                 {loading ? 'Memproses...' : (
                   <>
                     Masuk ke Dashboard

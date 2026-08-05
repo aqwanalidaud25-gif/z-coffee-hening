@@ -3,14 +3,14 @@ import React from "react";
 import { LoaderCircle } from "lucide-react";
 
 const VARIANTS = {
-  primary: "bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-70",
-  secondary: "bg-white border border-stone-200 text-stone-700 hover:bg-stone-50",
-  ghost: "bg-transparent text-stone-600 hover:bg-stone-100",
-  danger: "bg-rose-600 text-white hover:bg-rose-700",
+  primary: "bg-amber-600 text-white shadow-[var(--shadow)] hover:bg-amber-700 disabled:opacity-70",
+  secondary: "bg-white border border-stone-200 text-stone-700 shadow-sm hover:border-stone-300 hover:bg-stone-50 disabled:bg-stone-100",
+  ghost: "bg-transparent text-stone-700 hover:bg-stone-100 disabled:text-stone-400",
+  danger: "bg-rose-600 text-white shadow-sm hover:bg-rose-700 disabled:bg-rose-300",
 };
 
 export default function Button({ children, variant = "primary", loading = false, disabled = false, className = "", ...props }) {
-  const classes = `inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 ${VARIANTS[variant] || VARIANTS.primary} ${className}`;
+  const classes = `inline-flex items-center justify-center gap-2 rounded-[1.25rem] px-4 py-2.5 text-sm font-semibold transition duration-200 ease-out disabled:cursor-not-allowed disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-stone-50 ${VARIANTS[variant] || VARIANTS.primary} ${className}`;
 
   return (
     <button {...props} disabled={disabled || loading} className={classes}>

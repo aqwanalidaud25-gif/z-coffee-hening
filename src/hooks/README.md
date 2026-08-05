@@ -1,34 +1,48 @@
-# Hooks untuk attendance
+# Hook untuk attendance
 
-File ini memodelkan kontrak UI yang siap dipakai saat backend tersedia.
+Hook ini sudah diimplementasikan di [src/hooks/useAttendance.js](../hooks/useAttendance.js) dan dipakai oleh halaman absensi serta laporan absensi. Saat ini, modul ini masih berjalan dengan data mock lokal dan simulasi loading, sehingga cocok untuk demo UI sebelum backend tersedia.
 
-## Endpoint yang diharapkan
+## Kondisi saat ini
 
-- GET /api/employees -> daftar karyawan
-- POST /api/attendance/verify-pin -> { employeeId, pin }
-- POST /api/attendance/record -> { employeeId, type }
-- GET /api/attendance/report -> rekap absensi
+- Data karyawan dan laporan absensi disimpan sebagai mock array lokal di dalam hook.
+- Proses verifikasi PIN dan pencatatan absensi mensimulasikan delay agar UI terasa lebih realistis.
+- Halaman absensi dan laporan absensi sudah terhubung ke hook tersebut untuk menampilkan status, jam, dan ringkasan data.
 
-## Response yang disarankan
+## Fungsi yang tersedia
 
-### verify-pin
+- verifyPin({ employeeId, pin }) -> memeriksa PIN, mengembalikan status validasi, data karyawan, dan pesan.
+- recordAttendance({ employeeId, type }) -> mencatat absensi masuk/pulang dan mengembalikan hasil aksi.
+- refreshReport() -> memuat ulang data laporan dari state mock.
+
+## Bentuk response saat ini
+
+### verifyPin
+```js
 {
-  "valid": true,
-  "employee": { "id": "E001", "name": "Ayu", "role": "Barista" },
-  "message": "PIN valid"
+  ok: true,
+  message: "PIN valid untuk Ayu.",
+  employee: { id: "E001", name: "Ayu", role: "Barista", pin: "1234" },
+  type: "masuk",
+  time: "08:05"
 }
+```
 
-### record
+### recordAttendance
+```js
 {
-  "success": true,
-  "type": "masuk",
-  "time": "08:05",
-  "message": "Absensi tercatat"
+  ok: true,
+  message: "Ayu tercatat masuk pukul 08:05.",
+  employee: { id: "E001", name: "Ayu", role: "Barista", pin: "1234" },
+  type: "masuk",
+  time: "08:05"
 }
+```
 
 ### report
-{
-  "data": [
-    { "id": 1, "name": "Ayu", "status": "Hadir", "time": "08:05" }
-  ]
-}
+```js
+[
+  { id: 1, name: "Ayu", role: "Barista", status: "Hadir", time: "08:05", tone: "bg-emerald-50 text-emerald-700" }
+]
+```
+
+Jika backend nanti tersedia, bagian ini dapat diubah agar hook memanggil API eksternal secara langsung.

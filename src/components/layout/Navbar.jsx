@@ -32,7 +32,7 @@ export default function Navbar({ onMenuClick, onLogout }) {
   ];
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-stone-200/70 bg-stone-50/70 px-4 py-3 backdrop-blur-md md:px-8">
+    <header className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-stone-200/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md md:px-8">
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
@@ -46,19 +46,19 @@ export default function Navbar({ onMenuClick, onLogout }) {
           <img
             src={logo}
             alt="Logo Z Coffee Hening"
-            className="h-12 w-12 object-contain md:h-16 md:w-43"
+            className="h-12 w-12 object-contain md:h-16 md:w-16"
           />
         </div>
       </div>
 
       <div className="flex items-center gap-3">
-          <div className="hidden items-center gap-2 rounded-xl border border-stone-200 bg-white/70 px-3 py-2 shadow-sm sm:flex">
+        <div className="hidden items-center gap-2 rounded-2xl border border-stone-200 bg-white px-3 py-2 shadow-sm sm:flex">
           <Search className="h-4 w-4 text-stone-400" />
           <input
             type="text"
             placeholder="Cari transaksi, menu..."
             aria-label="Cari"
-            className="w-40 bg-transparent text-sm text-stone-700 placeholder:text-stone-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 lg:w-56"
+            className="w-40 bg-transparent text-sm text-stone-700 placeholder:text-stone-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 lg:w-56"
           />
         </div>
 

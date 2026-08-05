@@ -17,13 +17,11 @@ export default function Layout({ children, onLogout }) {
     <div className="flex min-h-screen bg-stone-50">
       <Sidebar isOpen={isOpen} onClose={close} />
 
-      {/* Main Area: flex-1 agar mengisi sisa ruang di samping sidebar */}
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <Navbar onMenuClick={toggle} onLogout={onLogout} />
 
         <main className="flex-1 px-4 py-6 md:px-8 md:py-8">
-          {/* Grid dasar untuk konten dashboard, bisa diatur ulang per halaman */}
-          <div className="mx-auto grid max-w-7xl gap-6">{children}</div>
+          <div className="mx-auto w-full max-w-7xl space-y-6">{children}</div>
         </main>
       </div>
     </div>

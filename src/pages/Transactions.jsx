@@ -1,5 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
+import Button from "../components/ui/Button";
+import PageHeader from "../components/ui/PageHeader";
 import Skeleton from "../components/ui/Skeleton";
 import EmptyState from "../components/ui/EmptyState";
 
@@ -49,7 +51,19 @@ export default function Transactions({ onLogout }) {
 
   return (
     <Layout onLogout={onLogout}>
-      <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+      <PageHeader
+        subtitle="Transaksi"
+        title="Riwayat penjualan"
+        description="Lihat ringkasan omzet, status pesanan, dan temukan transaksi yang perlu ditindaklanjuti dengan cepat."
+        status="Aktif"
+        actions={
+          <Button variant="secondary" className="whitespace-nowrap">
+            Export laporan
+          </Button>
+        }
+      />
+
+      <div className="rounded-[1.25rem] border border-stone-200 bg-white p-6 shadow-[var(--shadow)]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-sm font-medium text-amber-600">Transaksi</p>
@@ -66,21 +80,21 @@ export default function Transactions({ onLogout }) {
         </div>
 
         <div className="mt-6 grid gap-4 md:grid-cols-3">
-          <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+          <div className="rounded-[1.25rem] border border-stone-200 bg-stone-50 p-4">
             <p className="text-sm text-stone-500">Total transaksi</p>
             <p className="mt-1 text-xl font-semibold text-stone-900">{transactionsData.length}</p>
           </div>
-          <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+          <div className="rounded-[1.25rem] border border-stone-200 bg-stone-50 p-4">
             <p className="text-sm text-stone-500">Pendapatan</p>
             <p className="mt-1 text-xl font-semibold text-stone-900">{formatRupiah(totalRevenue)}</p>
           </div>
-          <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+          <div className="rounded-[1.25rem] border border-stone-200 bg-stone-50 p-4">
             <p className="text-sm text-stone-500">Menunggu</p>
             <p className="mt-1 text-xl font-semibold text-amber-700">{pendingCount}</p>
           </div>
         </div>
 
-        <div className="mt-6 rounded-xl border border-stone-200 bg-stone-50 p-4">
+        <div className="mt-6 rounded-[1.25rem] border border-stone-200 bg-stone-50 p-4">
           <label htmlFor="transaction-search" className="text-sm font-medium text-stone-700">
             Cari transaksi
           </label>
@@ -94,7 +108,7 @@ export default function Transactions({ onLogout }) {
           />
         </div>
 
-        <div className="mt-4 overflow-hidden rounded-xl border border-stone-200">
+        <div className="mt-4 overflow-hidden rounded-[1.25rem] border border-stone-200">
           <div className="hidden grid-cols-[1.2fr_1fr_0.9fr_0.8fr] bg-stone-100 px-4 py-3 text-sm font-semibold text-stone-700 md:grid">
             <div>Transaksi</div>
             <div>Tanggal & metode</div>

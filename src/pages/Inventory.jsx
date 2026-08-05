@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
+import Button from "../components/ui/Button";
+import PageHeader from "../components/ui/PageHeader";
 import Skeleton from "../components/ui/Skeleton";
 import EmptyState from "../components/ui/EmptyState";
 
@@ -37,6 +39,14 @@ export default function Inventory({ onLogout }) {
 
   return (
     <Layout onLogout={onLogout}>
+      <PageHeader
+        subtitle="Inventaris"
+        title="Kelola stok bahan baku"
+        description="Tambahkan, tandai, dan pantau status persediaan supaya operasi kafe selalu lancar."
+        status="Terupdate"
+        actions={<Button variant="secondary">Cetak laporan stok</Button>}
+      />
+
       <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div>

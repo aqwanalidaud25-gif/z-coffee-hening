@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Layout from "../components/layout/Layout";
+import Button from "../components/ui/Button";
+import PageHeader from "../components/ui/PageHeader";
 
 const initialSettings = [
   { title: "Jam operasional", detail: "07.00 - 22.00" },
@@ -26,6 +28,14 @@ export default function Settings({ onLogout }) {
 
   return (
     <Layout onLogout={onLogout}>
+      <PageHeader
+        subtitle="Pengaturan"
+        title="Preferensi operasional"
+        description="Atur jam operasional, metode pembayaran, dan notifikasi dengan mudah."
+        status="Terkelola"
+        actions={<Button variant="secondary">Simpan semua</Button>}
+      />
+
       <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
         <div>
           <p className="text-sm font-medium text-amber-600">Pengaturan</p>

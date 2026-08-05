@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import Layout from "../components/layout/Layout";
+import Button from "../components/ui/Button";
+import PageHeader from "../components/ui/PageHeader";
 
 const customersData = [
   { name: "Alya", tier: "Gold", orders: 14, lastVisit: "2 hari lalu", status: "Aktif" },
@@ -23,6 +25,14 @@ export default function Customers({ onLogout }) {
 
   return (
     <Layout onLogout={onLogout}>
+      <PageHeader
+        subtitle="Pelanggan"
+        title="Analitik pelanggan setia"
+        description="Cari dan pantau pelanggan yang sering datang maupun mereka yang butuh perhatian lebih."
+        status="Data aktif"
+        actions={<Button variant="secondary">Lihat loyalitas</Button>}
+      />
+
       <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div>

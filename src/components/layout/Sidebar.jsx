@@ -31,7 +31,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
       <aside
         className={`
-          fixed inset-y-0 left-0 z-50 w-56 md:w-64 bg-stone-900 text-stone-200
+          fixed inset-y-0 left-0 z-50 w-56 md:w-64 bg-stone-950 text-stone-100 shadow-2xl shadow-stone-950/20
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:relative md:translate-x-0 md:flex md:flex-col md:shrink-0
@@ -39,10 +39,10 @@ export default function Sidebar({ isOpen, onClose }) {
       >
         <div className="flex h-full flex-col">
           {/* Brand */}
-          <div className="flex items-center justify-between border-b border-stone-800 px-4 py-4">
-            <div className="hidden md:flex flex-col">
-              <span className="text-lg font-semibold uppercase tracking-[0.24em] text-amber-400">Z Coffee</span>
-              <span className="text-sm font-medium uppercase tracking-[0.32em] text-stone-400">Hening</span>
+          <div className="flex items-center justify-between border-b border-stone-800 px-5 py-5">
+            <div>
+              <p className="text-lg font-semibold uppercase tracking-[0.24em] text-amber-300">Z Coffee</p>
+              <p className="text-xs uppercase tracking-[0.28em] text-stone-500">Hening</p>
             </div>
             <button
               onClick={onClose}
@@ -54,30 +54,29 @@ export default function Sidebar({ isOpen, onClose }) {
           </div>
 
           {/* Tagline */}
-          <div className="border-b border-stone-800 px-6 py-3">
-            <p className="text-xs font-medium text-amber-400">Menemukan Tenang Disetiap Tegukan</p>
+          <div className="border-b border-stone-800 px-5 py-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-400">Menemukan tenang di setiap tegukan</p>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 space-y-1 px-3 py-6" aria-label="Navigasi utama">
+          <nav className="flex-1 space-y-2 px-4 py-6" aria-label="Navigasi utama">
             {NAV_ITEMS.map(({ label, icon: Icon, to }) => (
               <NavLink
-                key={label}
-                to={to}
-                onClick={onClose}
-                className={({ isActive }) => `
-                  flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium
-                  transition-colors
-                  ${
-                    isActive
-                      ? "bg-amber-600 text-stone-50 shadow-sm"
-                      : "text-stone-400 hover:bg-stone-800 hover:text-stone-100"
-                  }
-                `}
-              >
-                <Icon className="h-4 w-4" strokeWidth={2} />
-                {label}
-              </NavLink>
+              key={label}
+              to={to}
+              onClick={onClose}
+              className={({ isActive }) => `
+                flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition duration-200
+                ${
+                  isActive
+                    ? "bg-amber-600 text-white shadow-sm"
+                    : "text-stone-400 hover:bg-stone-900 hover:text-white"
+                }
+              `}
+            >
+              <Icon className="h-4 w-4" strokeWidth={2} />
+              {label}
+            </NavLink>
             ))}
           </nav>
 

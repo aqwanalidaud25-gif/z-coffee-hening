@@ -5,8 +5,8 @@ Dashboard manajemen kafe berbasis React, Vite, Tailwind CSS, dan React Router ya
 ## Fitur yang tersedia
 
 - Dashboard utama dengan ringkasan performa kafe dan elemen visual yang lebih polished
-- Halaman absensi karyawan dengan verifikasi PIN, status hadir/izin/telat, dan UI yang siap dipakai
-- Halaman laporan absensi untuk melihat rekapan harian dan bulanan secara terstruktur
+- Halaman absensi karyawan dengan alur verifikasi PIN, status hadir/izin/telat, dan UI yang sudah terhubung ke hook custom
+- Halaman laporan absensi untuk melihat rekap kehadiran harian dengan ringkasan status dan jam secara terstruktur
 - Halaman transaksi dengan pencarian, ringkasan omzet, dan status transaksi
 - Halaman inventaris dengan form tambah barang oleh admin
 - Halaman pelanggan dengan pencarian dan status aktivitas untuk memantau pelanggan yang jarang datang
@@ -24,7 +24,7 @@ Beberapa perubahan yang sudah diterapkan di aplikasi:
 - Menambahkan navbar dengan notifikasi, profil admin, dan tombol logout
 - Menambahkan komponen UI reusable seperti button, modal, dialog konfirmasi, empty state, skeleton, dan panel notifikasi
 - Menambahkan halaman 404 untuk route yang tidak dikenal
-- Menambahkan halaman absensi dan laporan absensi untuk operasional harian
+- Menambahkan halaman absensi dan laporan absensi yang saat ini memakai data mock lokal melalui hook custom untuk simulasi alur operasional
 - Menambahkan fitur pencarian dan ringkasan transaksi, inventaris, serta pelanggan
 - Menambahkan desain token warna dan visual system yang lebih profesional dan konsisten
 - Menambahkan uji komponen dasar dengan Vitest dan Testing Library

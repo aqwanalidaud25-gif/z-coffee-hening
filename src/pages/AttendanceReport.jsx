@@ -1,5 +1,7 @@
 import { RotateCcw, AlertTriangle, CalendarDays, Users2 } from "lucide-react";
 import Layout from "../components/layout/Layout";
+import Button from "../components/ui/Button";
+import PageHeader from "../components/ui/PageHeader";
 import useAttendance from "../hooks/useAttendance";
 
 export default function AttendanceReport({ onLogout }) {
@@ -7,22 +9,19 @@ export default function AttendanceReport({ onLogout }) {
 
   return (
     <Layout onLogout={onLogout}>
-      <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-sm font-medium text-amber-600">Laporan absensi admin</p>
-            <h2 className="mt-1 text-2xl font-semibold tracking-tight text-stone-900">Rekap kehadiran harian dan bulanan</h2>
-            <p className="mt-2 text-sm text-stone-500">UI siap dipakai untuk API nanti, dengan data dummy saat ini.</p>
-          </div>
-          <button
-            onClick={() => refreshReport()}
-            className="flex items-center gap-2 rounded-xl border border-stone-200 bg-stone-50 px-3 py-2 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100"
-          >
-            <RotateCcw className="h-4 w-4" />
+      <PageHeader
+        subtitle="Laporan absensi"
+        title="Rekap kehadiran"
+        description="Sajikan ringkasan kehadiran harian dengan status dan jam secara jelas."
+        status="Real-time"
+        actions={
+          <Button variant="secondary" onClick={() => refreshReport()}>
             Refresh data
-          </button>
-        </div>
+          </Button>
+        }
+      />
 
+      <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
         {error ? (
           <div className="mt-6 flex items-center gap-3 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-4 text-sm text-rose-700">
             <AlertTriangle className="h-4 w-4" />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CalendarCheck2, Clock3, AlertTriangle, CheckCircle2, ArrowRight } from "lucide-react";
 import Layout from "../components/layout/Layout";
+import PageHeader from "../components/ui/PageHeader";
 import useAttendance from "../hooks/useAttendance";
 
 export default function AbsensiKaryawan({ onLogout }) {
@@ -21,17 +22,14 @@ export default function AbsensiKaryawan({ onLogout }) {
 
   return (
     <Layout onLogout={onLogout}>
-      <div className="rounded-2xl border border-stone-200 bg-gradient-to-r from-amber-600 to-amber-700 p-6 text-white shadow-sm">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <CalendarCheck2 className="h-5 w-5" />
-            <h2 className="text-2xl font-semibold tracking-tight">Pencatatan Absensi</h2>
-          </div>
-          <p className="text-sm text-amber-100">Verifikasi PIN karyawan dan catat kehadiran masuk atau pulang</p>
-        </div>
-      </div>
+      <PageHeader
+        subtitle="Absensi"
+        title="Pencatatan kehadiran karyawan"
+        description="Verifikasi PIN secara cepat dan catat kedatangan atau kepulangan tim secara real-time."
+        status="Siap pakai"
+      />
 
-      <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+      <div className="rounded-[1.25rem] border border-stone-200 bg-white p-6 shadow-[var(--shadow)]">
         <div className="mb-6 border-b border-stone-200 pb-4">
           <h3 className="text-lg font-semibold text-stone-900">Verifikasi & Catat Absensi</h3>
           <p className="mt-1 text-sm text-stone-500">Pilih karyawan, masukkan PIN, dan catat waktu kehadiran</p>
@@ -109,7 +107,7 @@ export default function AbsensiKaryawan({ onLogout }) {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+      <div className="rounded-[1.25rem] border border-stone-200 bg-white p-6 shadow-[var(--shadow)]">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold text-stone-900">Ringkasan Absensi Hari Ini</h3>
           <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
@@ -126,7 +124,7 @@ export default function AbsensiKaryawan({ onLogout }) {
         ) : report.length > 0 ? (
           <div className="space-y-2">
             {report.map((person) => (
-              <div key={person.id} className="flex items-center justify-between rounded-xl border border-stone-200 bg-stone-50 px-4 py-3">
+              <div key={person.id} className="flex items-center justify-between rounded-[1.25rem] border border-stone-200 bg-stone-50 px-4 py-3">
                 <div>
                   <p className="font-semibold text-stone-900">{person.name}</p>
                   <p className="text-xs text-stone-500">{person.role}</p>
