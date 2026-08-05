@@ -9,6 +9,7 @@ export default function AbsensiKaryawan({ onLogout }) {
   const [selectedEmployeeId, setSelectedEmployeeId] = useState("");
   const [pin, setPin] = useState("");
   const [actionType, setActionType] = useState("masuk");
+  const [query, setQuery] = useState("");
 
   const handleVerify = async () => {
     if (!selectedEmployeeId || !pin) return;
@@ -20,6 +21,16 @@ export default function AbsensiKaryawan({ onLogout }) {
     await recordAttendance({ employeeId: selectedEmployeeId, type: actionType });
   };
 
+  const hadirCount = report.filter((r) => r.status === "Hadir").length;
+  const izinCount = report.filter((r) => r.status === "Izin").length;
+  const telatCount = report.filter((r) => r.status === "Telat").length;
+  const totalEmployees = employees.length;
+
+  const visibleReport = report.filter((r) => {
+    if (!query) return true;
+    return r.name.toLowerCase().includes(query.toLowerCase());
+  });
+
   return (
     <Layout onLogout={onLogout}>
       <PageHeader
@@ -30,9 +41,33 @@ export default function AbsensiKaryawan({ onLogout }) {
       />
 
       <div className="rounded-[1.25rem] border border-stone-200 bg-white p-6 shadow-[var(--shadow)]">
-        <div className="mb-6 border-b border-stone-200 pb-4">
-          <h3 className="text-lg font-semibold text-stone-900">Verifikasi & Catat Absensi</h3>
-          <p className="mt-1 text-sm text-stone-500">Pilih karyawan, masukkan PIN, dan catat waktu kehadiran</p>
+        <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h3 className="text-lg font-semibold text-stone-900">Verifikasi & Catat Absensi</h3>
+            <p className="mt-1 text-sm text-stone-500">Pilih karyawan, masukkan PIN, dan catat waktu kehadiran</p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="flex items-center gap-2 rounded-xl border border-stone-100 bg-stone-50 px-3 py-2">
+              <CalendarCheck2 className="h-4 w-4 text-amber-600" />
+              <div className="text-sm">
+                <div className="text-xs text-stone-500">Hadir</div>
+                <div className="text-sm font-semibold text-stone-900">{hadirCount}</div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 rounded-xl border border-stone-100 bg-stone-50 px-3 py-2">
+              <Clock3 className="h-4 w-4 text-stone-600" />
+              <div className="text-sm">
+                <div className="text-xs text-stone-500">Telat</div>
+                <div className="text-sm font-semibold text-stone-900">{telatCount}</div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 rounded-xl border border-stone-100 bg-stone-50 px-3 py-2">
+              <span className="text-xs text-stone-500">Total</span>
+              <div className="text-sm font-semibold text-stone-900">{totalEmployees}</div>
+            </div>
+          </div>
         </div>
 
         {error ? (
@@ -49,21 +84,31 @@ export default function AbsensiKaryawan({ onLogout }) {
           </div>
         ) : null}
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <div>
+        <div className="mt-4 grid gap-4 md:grid-cols-3">
+          <div className="md:col-span-2">
             <label className="mb-2 block text-sm font-semibold text-stone-700">Pilih Karyawan</label>
-            <select
-              value={selectedEmployeeId}
-              onChange={(event) => setSelectedEmployeeId(event.target.value)}
-              className="w-full rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700 transition-colors focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"
-            >
-              <option value="">— Pilih karyawan —</option>
-              {employees.map((employee) => (
-                <option key={employee.id} value={employee.id}>
-                  {employee.name} — {employee.role}
-                </option>
-              ))}
-            </select>
+            <div className="flex gap-2">
+              <select
+                value={selectedEmployeeId}
+                onChange={(event) => setSelectedEmployeeId(event.target.value)}
+                className="w-full rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700 transition-colors focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"
+              >
+                <option value="">— Pilih karyawan —</option>
+                {employees.map((employee) => (
+                  <option key={employee.id} value={employee.id}>
+                    {employee.name} — {employee.role}
+                  </option>
+                ))}
+              </select>
+
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Cari karyawan..."
+                className="w-56 rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700 transition-colors focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"
+              />
+            </div>
           </div>
 
           <div>
@@ -78,7 +123,7 @@ export default function AbsensiKaryawan({ onLogout }) {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <button
             onClick={handleVerify}
             disabled={isSubmitting || !selectedEmployeeId || !pin}
@@ -110,9 +155,10 @@ export default function AbsensiKaryawan({ onLogout }) {
       <div className="rounded-[1.25rem] border border-stone-200 bg-white p-6 shadow-[var(--shadow)]">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold text-stone-900">Ringkasan Absensi Hari Ini</h3>
-          <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
-            {report.filter((r) => r.status === "Hadir").length} hadir
-          </span>
+          <div className="flex items-center gap-3">
+            <div className="text-sm text-stone-500">Hadir</div>
+            <div className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">{hadirCount}</div>
+          </div>
         </div>
 
         {isInitializing ? (
@@ -121,28 +167,32 @@ export default function AbsensiKaryawan({ onLogout }) {
               <div key={index} className="h-12 animate-pulse rounded-xl bg-stone-200" />
             ))}
           </div>
-        ) : report.length > 0 ? (
-          <div className="space-y-2">
-            {report.map((person) => (
-              <div key={person.id} className="flex items-center justify-between rounded-[1.25rem] border border-stone-200 bg-stone-50 px-4 py-3">
-                <div>
-                  <p className="font-semibold text-stone-900">{person.name}</p>
-                  <p className="text-xs text-stone-500">{person.role}</p>
-                </div>
+        ) : visibleReport.length > 0 ? (
+          <div className="space-y-3">
+            {visibleReport.map((person) => (
+              <div key={person.id} className="flex items-center justify-between gap-4 rounded-xl border border-stone-100 bg-stone-50 px-4 py-3 hover:shadow-sm">
                 <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-50 text-amber-700 font-semibold">
+                    {person.name.split(" ").map((n) => n[0]).slice(0,2).join("")}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-stone-900">{person.name}</p>
+                    <p className="text-xs text-stone-500">{person.role}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
                   <div className="flex items-center gap-1 text-xs text-stone-600">
                     <Clock3 className="h-3.5 w-3.5" />
                     {person.time}
                   </div>
-                  <span className={`rounded-full px-3 py-1 text-xs font-semibold ${person.tone}`}>
-                    {person.status}
-                  </span>
+                  <span className={`rounded-full px-3 py-1 text-xs font-semibold ${person.tone}`}>{person.status}</span>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-center text-sm text-stone-500">Belum ada data absensi hari ini</p>
+          <p className="text-center text-sm text-stone-500">Belum ada data absensi untuk pencarian ini</p>
         )}
       </div>
     </Layout>

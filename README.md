@@ -29,6 +29,11 @@ Beberapa perubahan yang sudah diterapkan di aplikasi:
 - Menambahkan desain token warna dan visual system yang lebih profesional dan konsisten
 - Menambahkan uji komponen dasar dengan Vitest dan Testing Library
 
+- Menambahkan kartu pemasukan harian dan bulanan di dashboard (kartu mingguan sudah tersedia) untuk memudahkan pemantauan performa harian dan ringkasan bulanan.
+- Rasionalisasi pengeluaran: menata kategori pengeluaran operasional agar lebih jelas—mis. bahan baku, gaji & tunjangan, biaya operasional (listrik, sewa), maintenance & peralatan, dan biaya pemasaran—sehingga laporan kas menjadi lebih transparan dan mudah dianalisis.
+- Fokus frontend: UI kartu dan dashboard dirancang profesional, siap pakai, dan mudah diintegrasikan dengan API backend untuk data real-time.
+ - Menambahkan kartu "Transaksi Bulanan" di dashboard untuk memudahkan pemantauan jumlah transaksi dalam satu bulan dan perbandingan dengan periode sebelumnya.
+
 ## Struktur folder
 
 ```text

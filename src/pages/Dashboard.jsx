@@ -17,9 +17,10 @@ export default function Dashboard({ onLogout }) {
   }, []);
 
   const topStats = [
-    { label: "Total Pemasukan", value: "Rp12.850.000", delta: "+18,2%", isPositive: true, icon: Wallet },
-    { label: "Transaksi", value: "342", delta: "+6,4%", isPositive: true, icon: ShoppingBag },
-    { label: "Pelanggan Baru", value: "28", delta: "-3,1%", isPositive: false, icon: Users2 },
+    { label: "Pemasukan Harian", value: "Rp1.250.000", delta: "+4,8%", isPositive: true, icon: Wallet, comparisonLabel: "vs kemarin" },
+    { label: "Pemasukan Mingguan", value: "Rp8.450.000", delta: "+12,1%", isPositive: true, icon: Wallet, comparisonLabel: "vs minggu lalu" },
+    { label: "Pemasukan Bulanan", value: "Rp42.300.000", delta: "-2,3%", isPositive: false, icon: Wallet, comparisonLabel: "vs bulan lalu" },
+    { label: "Transaksi Bulanan", value: "342", delta: "+6,4%", isPositive: true, icon: ShoppingBag, comparisonLabel: "vs bulan lalu" },
   ];
 
   const bestSellers = [
@@ -56,12 +57,20 @@ export default function Dashboard({ onLogout }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {loading ? (
           <Skeleton count={3} />
         ) : (
           topStats.map((s) => (
-            <StatCard key={s.label} label={s.label} value={s.value} delta={s.delta} isPositive={s.isPositive} icon={s.icon} />
+            <StatCard
+              key={s.label}
+              label={s.label}
+              value={s.value}
+              delta={s.delta}
+              isPositive={s.isPositive}
+              icon={s.icon}
+              comparisonLabel={s.comparisonLabel}
+            />
           ))
         )}
       </div>

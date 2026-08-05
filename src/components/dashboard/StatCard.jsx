@@ -5,7 +5,7 @@ import { ArrowUpRight, ArrowDownRight } from "lucide-react";
  * Kartu ringkasan angka (mis. Pemasukan, Transaksi, Pelanggan Baru).
  * Menggunakan shadow-sm + rounded-xl agar terasa lembut & elegan.
  */
-export default function StatCard({ label, value, delta, isPositive = true, icon: Icon }) {
+export default function StatCard({ label, value, delta, isPositive = true, icon: Icon, comparisonLabel = "vs minggu lalu" }) {
   return (
     <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between">
@@ -31,7 +31,7 @@ export default function StatCard({ label, value, delta, isPositive = true, icon:
         <span className={isPositive ? "text-emerald-600" : "text-red-500"}>
           {delta}
         </span>
-        <span className="text-stone-400">vs minggu lalu</span>
+        <span className="text-stone-400">{comparisonLabel}</span>
       </div>
     </div>
   );
