@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CalendarCheck2, Clock3, AlertTriangle, CheckCircle2, ArrowRight } from "lucide-react";
 import Layout from "../components/layout/Layout";
 import PageHeader from "../components/ui/PageHeader";
+import Button from "../components/ui/Button";
 import useAttendance from "../hooks/useAttendance";
 
 export default function AbsensiKaryawan({ onLogout }) {
@@ -25,10 +26,12 @@ export default function AbsensiKaryawan({ onLogout }) {
   const izinCount = report.filter((r) => r.status === "Izin").length;
   const telatCount = report.filter((r) => r.status === "Telat").length;
   const totalEmployees = employees.length;
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const visibleReport = report.filter((r) => {
-    if (!query) return true;
-    return r.name.toLowerCase().includes(query.toLowerCase());
+    const matchesQuery = !query || r.name.toLowerCase().includes(query.toLowerCase());
+    const matchesStatus = statusFilter === "all" || r.status.toLowerCase() === statusFilter;
+    return matchesQuery && matchesStatus;
   });
 
   return (
@@ -40,32 +43,30 @@ export default function AbsensiKaryawan({ onLogout }) {
         status="Siap pakai"
       />
 
+      {isInitializing && (
+        <div className="mb-6 rounded-3xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-600">
+          Memuat data absensi... Mohon tunggu.
+        </div>
+      )}
+
       <div className="rounded-[1.25rem] border border-stone-200 bg-white p-6 shadow-[var(--shadow)]">
-        <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="mb-6 grid gap-4 md:grid-cols-[1.25fr_1fr] md:items-center">
           <div>
             <h3 className="text-lg font-semibold text-stone-900">Verifikasi & Catat Absensi</h3>
             <p className="mt-1 text-sm text-stone-500">Pilih karyawan, masukkan PIN, dan catat waktu kehadiran</p>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-2 rounded-xl border border-stone-100 bg-stone-50 px-3 py-2">
-              <CalendarCheck2 className="h-4 w-4 text-amber-600" />
-              <div className="text-sm">
-                <div className="text-xs text-stone-500">Hadir</div>
-                <div className="text-sm font-semibold text-stone-900">{hadirCount}</div>
-              </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="rounded-[1.25rem] border border-stone-200 bg-stone-50 p-4 shadow-sm">
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Hadir</div>
+              <div className="mt-3 text-3xl font-semibold text-stone-900">{hadirCount}</div>
             </div>
-
-            <div className="flex items-center gap-2 rounded-xl border border-stone-100 bg-stone-50 px-3 py-2">
-              <Clock3 className="h-4 w-4 text-stone-600" />
-              <div className="text-sm">
-                <div className="text-xs text-stone-500">Telat</div>
-                <div className="text-sm font-semibold text-stone-900">{telatCount}</div>
-              </div>
+            <div className="rounded-[1.25rem] border border-stone-200 bg-stone-50 p-4 shadow-sm">
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Telat</div>
+              <div className="mt-3 text-3xl font-semibold text-stone-900">{telatCount}</div>
             </div>
-
-            <div className="flex items-center gap-2 rounded-xl border border-stone-100 bg-stone-50 px-3 py-2">
-              <span className="text-xs text-stone-500">Total</span>
-              <div className="text-sm font-semibold text-stone-900">{totalEmployees}</div>
+            <div className="rounded-[1.25rem] border border-stone-200 bg-stone-50 p-4 shadow-sm">
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">Total</div>
+              <div className="mt-3 text-3xl font-semibold text-stone-900">{totalEmployees}</div>
             </div>
           </div>
         </div>
@@ -87,11 +88,12 @@ export default function AbsensiKaryawan({ onLogout }) {
         <div className="mt-4 grid gap-4 md:grid-cols-3">
           <div className="md:col-span-2">
             <label className="mb-2 block text-sm font-semibold text-stone-700">Pilih Karyawan</label>
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <select
                 value={selectedEmployeeId}
                 onChange={(event) => setSelectedEmployeeId(event.target.value)}
-                className="w-full rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700 transition-colors focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"
+                disabled={isInitializing}
+                className="w-full rounded-3xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700 transition-colors focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100 disabled:cursor-not-allowed disabled:bg-stone-100"
               >
                 <option value="">— Pilih karyawan —</option>
                 {employees.map((employee) => (
@@ -106,7 +108,8 @@ export default function AbsensiKaryawan({ onLogout }) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Cari karyawan..."
-                className="w-56 rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700 transition-colors focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"
+                disabled={isInitializing}
+                className="w-full rounded-3xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700 transition-colors focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100 disabled:cursor-not-allowed disabled:bg-stone-100"
               />
             </div>
           </div>
@@ -117,47 +120,75 @@ export default function AbsensiKaryawan({ onLogout }) {
               type="password"
               value={pin}
               onChange={(event) => setPin(event.target.value)}
-              className="w-full rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700 transition-colors focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"
+              className="w-full rounded-3xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700 transition-colors focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"
               placeholder="Masukkan PIN 4 digit"
             />
           </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <button
+        <div className="mt-6 grid gap-3 sm:grid-cols-[1.6fr_1fr_1fr]">
+          <Button
             onClick={handleVerify}
-            disabled={isSubmitting || !selectedEmployeeId || !pin}
-            className="flex items-center gap-2 rounded-xl bg-amber-600 px-5 py-3 font-semibold text-white transition-colors hover:bg-amber-700 disabled:cursor-not-allowed disabled:bg-stone-300"
+            loading={isSubmitting}
+            disabled={isInitializing || isSubmitting || !selectedEmployeeId || !pin}
+            className="w-full"
           >
-            {isSubmitting ? "Memverifikasi..." : "Verifikasi PIN"}
-            <ArrowRight className="h-4 w-4" />
-          </button>
+            Verifikasi PIN
+          </Button>
 
           <select
             value={actionType}
             onChange={(event) => setActionType(event.target.value)}
-            className="rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700 transition-colors focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100"
+            disabled={isInitializing}
+            className="w-full rounded-3xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700 transition duration-200 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100 disabled:cursor-not-allowed disabled:bg-stone-100"
           >
             <option value="masuk">Catat Masuk</option>
             <option value="pulang">Catat Pulang</option>
           </select>
 
-          <button
+          <Button
+            variant="secondary"
             onClick={handleRecord}
-            disabled={isSubmitting || !selectedEmployeeId}
-            className="rounded-xl border border-stone-200 bg-stone-50 px-5 py-3 font-semibold text-stone-700 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:text-stone-400"
+            loading={isSubmitting}
+            disabled={isInitializing || isSubmitting || !selectedEmployeeId}
+            className="w-full"
           >
-            {isSubmitting ? "Mengirim..." : "Simpan Absensi"}
-          </button>
+            Simpan Absensi
+          </Button>
         </div>
       </div>
 
       <div className="rounded-[1.25rem] border border-stone-200 bg-white p-6 shadow-[var(--shadow)]">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-stone-900">Ringkasan Absensi Hari Ini</h3>
-          <div className="flex items-center gap-3">
-            <div className="text-sm text-stone-500">Hadir</div>
-            <div className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">{hadirCount}</div>
+        <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="text-lg font-semibold text-stone-900">Ringkasan Absensi Hari Ini</h3>
+            <p className="text-sm text-stone-500">Pantau status kehadiran tim dengan cepat.</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => setStatusFilter("all")}
+              className={`rounded-full px-4 py-2 text-xs font-semibold transition ${statusFilter === "all" ? "bg-amber-600 text-white" : "bg-stone-100 text-stone-700 hover:bg-stone-200"}`}
+            >
+              Semua
+            </button>
+            <button
+              onClick={() => setStatusFilter("hadir")}
+              className={`rounded-full px-4 py-2 text-xs font-semibold transition ${statusFilter === "hadir" ? "bg-amber-600 text-white" : "bg-stone-100 text-stone-700 hover:bg-stone-200"}`}
+            >
+              Hadir
+            </button>
+            <button
+              onClick={() => setStatusFilter("telat")}
+              className={`rounded-full px-4 py-2 text-xs font-semibold transition ${statusFilter === "telat" ? "bg-amber-600 text-white" : "bg-stone-100 text-stone-700 hover:bg-stone-200"}`}
+            >
+              Telat
+            </button>
+            <button
+              onClick={() => setStatusFilter("izin")}
+              className={`rounded-full px-4 py-2 text-xs font-semibold transition ${statusFilter === "izin" ? "bg-amber-600 text-white" : "bg-stone-100 text-stone-700 hover:bg-stone-200"}`}
+            >
+              Izin
+            </button>
           </div>
         </div>
 
@@ -170,23 +201,27 @@ export default function AbsensiKaryawan({ onLogout }) {
         ) : visibleReport.length > 0 ? (
           <div className="space-y-3">
             {visibleReport.map((person) => (
-              <div key={person.id} className="flex items-center justify-between gap-4 rounded-xl border border-stone-100 bg-stone-50 px-4 py-3 hover:shadow-sm">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-50 text-amber-700 font-semibold">
-                    {person.name.split(" ").map((n) => n[0]).slice(0,2).join("")}
+              <div key={person.id} className="group overflow-hidden rounded-[1.5rem] border border-stone-200 bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+                <div className="flex items-center justify-between gap-4 px-5 py-4">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-amber-50 text-amber-700 font-semibold text-base">
+                      {person.name.split(" ").map((n) => n[0]).slice(0,2).join("")}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-stone-900">{person.name}</p>
+                      <p className="text-xs text-stone-500">{person.role}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold text-stone-900">{person.name}</p>
-                    <p className="text-xs text-stone-500">{person.role}</p>
-                  </div>
-                </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-1 text-xs text-stone-600">
-                    <Clock3 className="h-3.5 w-3.5" />
-                    {person.time}
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 rounded-3xl bg-stone-50 px-3 py-2 text-xs font-medium text-stone-600">
+                      <Clock3 className="h-4 w-4" />
+                      {person.time}
+                    </div>
+                    <span className={`rounded-full px-3 py-1.5 text-xs font-semibold ${person.tone}`}>
+                      {person.status}
+                    </span>
                   </div>
-                  <span className={`rounded-full px-3 py-1 text-xs font-semibold ${person.tone}`}>{person.status}</span>
                 </div>
               </div>
             ))}

@@ -12,7 +12,7 @@ Dashboard manajemen kafe berbasis React, Vite, Tailwind CSS, dan React Router ya
 - Halaman pelanggan dengan pencarian dan status aktivitas untuk memantau pelanggan yang jarang datang
 - Halaman pengaturan yang dapat diakses dengan cepat dari sidebar
 - Layout responsif dengan sidebar, navbar, dan elemen UI yang nyaman dipakai di desktop maupun mobile
-- Sistem autentikasi sederhana dengan proteksi route dan toast notifikasi global
+- Sistem autentikasi sederhana dengan proteksi route, login session di localStorage, dan redirect ke halaman login bila belum terautentikasi
 
 ## Update terbaru
 
@@ -20,7 +20,9 @@ Beberapa perubahan yang sudah diterapkan di aplikasi:
 
 - Menambahkan halaman login admin dengan validasi form, loading state, error state, dan toggle show/hide password
 - Menambahkan proteksi route agar halaman admin otomatis diarahkan ke halaman login saat belum terautentikasi
-- Menyimpan status login di localStorage agar sesi tetap aman saat refresh halaman
+- Menyimpan status login di localStorage agar sesi tetap terjaga saat refresh halaman
+- Menyediakan login demo: admin@zcoffee.id / password123
+- Menambahkan uji frontend minimal untuk komponen StatCard, halaman Login, dan halaman Dashboard
 - Menambahkan navbar dengan notifikasi, profil admin, dan tombol logout
 - Menambahkan komponen UI reusable seperti button, modal, dialog konfirmasi, empty state, skeleton, dan panel notifikasi
 - Menambahkan halaman 404 untuk route yang tidak dikenal

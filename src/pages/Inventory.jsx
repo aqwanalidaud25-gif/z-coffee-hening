@@ -47,66 +47,73 @@ export default function Inventory({ onLogout }) {
         actions={<Button variant="secondary">Cetak laporan stok</Button>}
       />
 
-      <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+      <div className="rounded-[1.5rem] border border-stone-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-medium text-amber-600">Inventaris</p>
-            <h2 className="mt-1 text-2xl font-semibold text-stone-900">Stok bahan baku & perlengkapan</h2>
+            <p className="text-sm font-medium uppercase tracking-[0.14em] text-amber-600">Inventaris</p>
+            <h2 className="mt-2 text-3xl font-semibold text-stone-900">Stok bahan baku & perlengkapan</h2>
           </div>
-          <span className="rounded-full bg-amber-50 px-3 py-1 text-sm font-medium text-amber-700">
+          <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 px-4 py-3 text-sm font-semibold text-stone-700 shadow-sm">
             {items.length} item terdaftar
-          </span>
+          </div>
         </div>
 
-        <form onSubmit={handleAddItem} className="mt-6 rounded-xl border border-stone-200 bg-stone-50 p-4">
-          <div className="grid gap-3 md:grid-cols-3">
+        <form onSubmit={handleAddItem} className="mt-6 rounded-[1.5rem] border border-stone-200 bg-stone-50 p-6 shadow-sm">
+          <div className="grid gap-4 md:grid-cols-3">
             <input
               type="text"
               value={form.item}
               onChange={(event) => setForm((current) => ({ ...current, item: event.target.value }))}
               placeholder="Nama barang"
-              className="rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm text-stone-700 outline-none"
+              className="rounded-[1.5rem] border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-100"
             />
             <input
               type="text"
               value={form.stock}
               onChange={(event) => setForm((current) => ({ ...current, stock: event.target.value }))}
               placeholder="Stok, contoh: 48 kg"
-              className="rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm text-stone-700 outline-none"
+              className="rounded-[1.5rem] border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-100"
             />
             <select
               value={form.status}
               onChange={(event) => setForm((current) => ({ ...current, status: event.target.value }))}
-              className="rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm text-stone-700 outline-none"
+              className="rounded-[1.5rem] border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-100"
             >
               <option value="Aman">Aman</option>
               <option value="Hampir habis">Hampir habis</option>
               <option value="Perlu restock">Perlu restock</option>
             </select>
           </div>
-          <button
-            type="submit"
-            className="mt-3 rounded-full bg-amber-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-amber-700"
-          >
-            Tambah barang oleh admin
-          </button>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Button type="submit" className="rounded-[1.5rem]">
+              Tambah barang oleh admin
+            </Button>
+            <Button variant="secondary" type="button" className="rounded-[1.5rem]">
+              Cetak laporan stok
+            </Button>
+          </div>
         </form>
 
-        <div className="mt-6 space-y-3">
+        <div className="mt-6 grid gap-4">
           {loading ? (
             <Skeleton count={3} />
           ) : items.length === 0 ? (
             <EmptyState title="Inventaris kosong" description="Belum ada item terdaftar." />
           ) : (
             items.map((entry) => (
-              <div key={`${entry.item}-${entry.stock}`} className="flex items-center justify-between rounded-xl border border-stone-200 bg-stone-50 px-4 py-3">
-                <div>
-                  <p className="font-medium text-stone-900">{entry.item}</p>
-                  <p className="text-sm text-stone-500">Stok saat ini</p>
-                </div>
-                <div className="text-right">
-                  <p className="font-semibold text-stone-900">{entry.stock}</p>
-                  <p className="text-sm text-amber-700">{entry.status}</p>
+              <div
+                key={`${entry.item}-${entry.stock}`}
+                className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="text-lg font-semibold text-stone-900">{entry.item}</p>
+                    <p className="text-sm text-stone-500">Stok saat ini</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xl font-semibold text-stone-900">{entry.stock}</p>
+                    <p className="mt-1 rounded-full bg-amber-50 px-3 py-1 text-sm font-semibold text-amber-700">{entry.status}</p>
+                  </div>
                 </div>
               </div>
             ))

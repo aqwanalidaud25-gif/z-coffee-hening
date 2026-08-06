@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import { Wallet, ShoppingBag, Users2, Coffee, Sparkles } from "lucide-react";
-import { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import Button from "../components/ui/Button";
 import PageHeader from "../components/ui/PageHeader";
@@ -18,7 +18,7 @@ export default function Dashboard({ onLogout }) {
 
   const topStats = [
     { label: "Pemasukan Harian", value: "Rp1.250.000", delta: "+4,8%", isPositive: true, icon: Wallet, comparisonLabel: "vs kemarin" },
-    { label: "Pemasukan Mingguan", value: "Rp8.450.000", delta: "+12,1%", isPositive: true, icon: Wallet, comparisonLabel: "vs minggu lalu" },
+    { label: "Pemasukan Mingguan", value: "Rp8.450.000", delta: "+12,1%", isPositive: true, icon: Sparkles, comparisonLabel: "vs minggu lalu" },
     { label: "Pemasukan Bulanan", value: "Rp42.300.000", delta: "-2,3%", isPositive: false, icon: Wallet, comparisonLabel: "vs bulan lalu" },
     { label: "Transaksi Bulanan", value: "342", delta: "+6,4%", isPositive: true, icon: ShoppingBag, comparisonLabel: "vs bulan lalu" },
   ];
@@ -57,9 +57,9 @@ export default function Dashboard({ onLogout }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 xl:gap-5">
         {loading ? (
-          <Skeleton count={3} />
+          <Skeleton count={4} />
         ) : (
           topStats.map((s) => (
             <StatCard

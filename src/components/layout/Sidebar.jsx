@@ -1,3 +1,4 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { LayoutGrid, Receipt, Package, Users, Settings, X, CalendarCheck2, BarChart3 } from "lucide-react";
 
@@ -31,7 +32,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
       <aside
         className={`
-          fixed inset-y-0 left-0 z-50 w-56 md:w-64 bg-stone-950 text-stone-100 shadow-2xl shadow-stone-950/20
+          fixed inset-y-0 left-0 z-50 w-72 max-w-[18rem] bg-stone-950 text-stone-100 shadow-2xl shadow-stone-950/20
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:relative md:translate-x-0 md:flex md:flex-col md:shrink-0

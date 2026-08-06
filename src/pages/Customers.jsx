@@ -33,49 +33,71 @@ export default function Customers({ onLogout }) {
         actions={<Button variant="secondary">Lihat loyalitas</Button>}
       />
 
-      <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+      <div className="rounded-[1.5rem] border border-stone-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-sm font-medium text-amber-600">Pelanggan</p>
-            <h2 className="mt-1 text-2xl font-semibold text-stone-900">Daftar pelanggan setia</h2>
+            <p className="text-sm font-medium uppercase tracking-[0.14em] text-amber-600">Pelanggan</p>
+            <h2 className="mt-2 text-3xl font-semibold text-stone-900">Analitik pelanggan setia</h2>
           </div>
-          <span className="rounded-full bg-amber-50 px-3 py-1 text-sm font-medium text-amber-700">
+          <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 px-4 py-3 text-sm font-semibold text-stone-700 shadow-sm">
             {customersData.length} pelanggan aktif
-          </span>
+          </div>
         </div>
 
-        <div className="mt-6 rounded-xl border border-stone-200 bg-stone-50 p-4">
-          <label htmlFor="customer-search" className="text-sm font-medium text-stone-700">
-            Cari pelanggan
-          </label>
-          <input
-            id="customer-search"
-            type="text"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Cari nama, tier, status, atau terakhir datang"
-            className="mt-2 w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm text-stone-700 outline-none"
-          />
+        <div className="mt-6 grid gap-4 xl:grid-cols-[1.3fr_0.7fr]">
+          <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5 shadow-sm">
+            <label htmlFor="customer-search" className="text-sm font-semibold text-stone-700">Cari pelanggan</label>
+            <input
+              id="customer-search"
+              type="text"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Cari nama, tier, status, atau terakhir datang"
+              className="mt-3 w-full rounded-[1.5rem] border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700 outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-100"
+            />
+          </div>
+          <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5 shadow-sm">
+            <p className="text-sm font-semibold text-stone-700">Hasil pencarian</p>
+            <p className="mt-3 text-3xl font-semibold text-stone-900">{filteredCustomers.length}</p>
+            <p className="mt-1 text-sm text-stone-500">Pelanggan sesuai kriteria</p>
+          </div>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {filteredCustomers.map((customer) => (
-            <div key={customer.name} className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-              <div className="flex items-center justify-between">
-                <p className="font-semibold text-stone-900">{customer.name}</p>
-                <span className="rounded-full bg-white px-2.5 py-1 text-xs font-medium text-stone-600">
-                  {customer.tier}
-                </span>
+            <div key={customer.name} className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-amber-50 text-amber-700 font-semibold text-base">
+                    {customer.name
+                      .split(" ")
+                      .map((part) => part[0])
+                      .slice(0, 2)
+                      .join("")}
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-stone-900">{customer.name}</p>
+                    <p className="text-sm text-stone-500">{customer.tier}</p>
+                  </div>
+                </div>
+                <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-stone-600">{customer.status}</span>
               </div>
-              <p className="mt-3 text-sm text-stone-600">Total order: {customer.orders}</p>
-              <p className="mt-1 text-sm text-stone-600">Terakhir datang: {customer.lastVisit}</p>
-              <p className="mt-2 text-sm font-medium text-amber-700">Status: {customer.status}</p>
+              <div className="mt-5 grid gap-3 text-sm text-stone-600">
+                <div className="rounded-[1.5rem] bg-white px-4 py-3">
+                  <p className="font-medium text-stone-900">{customer.orders} order</p>
+                  <p className="text-xs text-stone-500">Total pesanan</p>
+                </div>
+                <div className="rounded-[1.5rem] bg-white px-4 py-3">
+                  <p className="font-medium text-stone-900">{customer.lastVisit}</p>
+                  <p className="text-xs text-stone-500">Terakhir datang</p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
 
         {filteredCustomers.length === 0 && (
-          <div className="mt-4 rounded-xl border border-dashed border-stone-200 bg-stone-50 p-4 text-sm text-stone-500">
+          <div className="mt-4 rounded-[1.5rem] border border-dashed border-stone-200 bg-stone-50 p-6 text-center text-sm text-stone-500">
             Tidak ada pelanggan yang cocok dengan pencarian.
           </div>
         )}

@@ -1,3 +1,4 @@
+import React from "react";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { useSidebar } from "../../hooks/useSidebar";
@@ -20,7 +21,7 @@ export default function Layout({ children, onLogout }) {
       <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <Navbar onMenuClick={toggle} onLogout={onLogout} />
 
-        <main className="flex-1 px-4 py-6 md:px-8 md:py-8">
+        <main className="flex-1 px-4 py-6 md:px-6 md:py-8 lg:px-8">
           <div className="mx-auto w-full max-w-7xl space-y-6">{children}</div>
         </main>
       </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import {
   AreaChart,
@@ -43,17 +43,26 @@ const dataMonthly = [
 ];
 
 function formatRupiah(value) {
-  return `Rp${(value / 1000).toFixed(0)}rb`;
+  if (value >= 1000000) {
+    return `Rp${(value / 1000000).toFixed(1)}jt`;
+  }
+
+  if (value >= 1000) {
+    return `Rp${(value / 1000).toFixed(0)}rb`;
+  }
+
+  return `Rp${value.toLocaleString("id-ID")}`;
 }
 
-function CustomTooltip({ active, payload, label, formatterLabel }) {
+function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-lg border border-stone-200 bg-white/95 px-3 py-2 shadow-sm backdrop-blur-sm">
-      <p className="text-xs text-stone-500">{formatterLabel ?? label}</p>
-      <p className="text-sm font-semibold text-stone-900">
+    <div className="rounded-2xl border border-stone-200 bg-white px-3 py-2 shadow-[0_10px_30px_-15px_rgba(15,23,42,0.2)]">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-stone-500">{label}</p>
+      <p className="mt-1 text-sm font-semibold text-stone-900">
         {formatRupiah(payload[0].value)}
       </p>
+      <p className="text-xs text-stone-500">Pemasukan</p>
     </div>
   );
 }
@@ -85,34 +94,34 @@ export default function RevenueChart() {
 
   return (
     <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-sm">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="text-sm font-semibold text-stone-900">{title}</h3>
           <p className="text-xs text-stone-500">{subtitle}</p>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="flex gap-2">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="inline-flex rounded-full bg-stone-100 p-1 shadow-sm">
             <button
               onClick={() => setMode("daily")}
-              className={`rounded-md px-2.5 py-1 text-xs font-medium ${mode === "daily" ? "bg-amber-50 text-amber-700" : "bg-stone-50 text-stone-600"}`}
+              className={`rounded-full px-4 py-2 text-xs font-semibold transition ${mode === "daily" ? "bg-amber-600 text-white shadow-md" : "text-stone-600 hover:bg-stone-100"}`}
             >
               Harian
             </button>
             <button
               onClick={() => setMode("weekly")}
-              className={`rounded-md px-2.5 py-1 text-xs font-medium ${mode === "weekly" ? "bg-amber-50 text-amber-700" : "bg-stone-50 text-stone-600"}`}
+              className={`rounded-full px-4 py-2 text-xs font-semibold transition ${mode === "weekly" ? "bg-amber-600 text-white shadow-md" : "text-stone-600 hover:bg-stone-100"}`}
             >
               Mingguan
             </button>
             <button
               onClick={() => setMode("monthly")}
-              className={`rounded-md px-2.5 py-1 text-xs font-medium ${mode === "monthly" ? "bg-amber-50 text-amber-700" : "bg-stone-50 text-stone-600"}`}
+              className={`rounded-full px-4 py-2 text-xs font-semibold transition ${mode === "monthly" ? "bg-amber-600 text-white shadow-md" : "text-stone-600 hover:bg-stone-100"}`}
             >
               Bulanan
             </button>
           </div>
 
-          <span className="rounded-lg bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-700">
+          <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700 shadow-sm">
             {delta}
           </span>
         </div>
@@ -127,27 +136,29 @@ export default function RevenueChart() {
                 <stop offset="95%" stopColor="#d97706" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid vertical={false} stroke="#e7e5e4" strokeDasharray="3 3" />
+            <CartesianGrid vertical={false} stroke="#e7e5e4" strokeDasharray="3 3" opacity={0.7} />
             <XAxis
               dataKey="label"
-              tick={{ fill: "#78716c", fontSize: 12 }}
+              tick={{ fill: "#57534e", fontSize: 12, fontWeight: 600 }}
               axisLine={{ stroke: "#e7e5e4" }}
               tickLine={false}
+              padding={{ left: 10, right: 10 }}
             />
             <YAxis
-              tick={{ fill: "#78716c", fontSize: 12 }}
+              tick={{ fill: "#57534e", fontSize: 12, fontWeight: 600 }}
               axisLine={false}
               tickLine={false}
               tickFormatter={formatRupiah}
-              width={55}
+              width={60}
             />
-            <Tooltip content={<CustomTooltip formatterLabel={mode === "daily" ? undefined : undefined} />} />
+            <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#d97706", strokeWidth: 1.5, opacity: 0.15 }} />
             <Area
               type="monotone"
               dataKey="pemasukan"
               stroke="#d97706"
-              strokeWidth={2.5}
+              strokeWidth={3}
               fill="url(#amberFill)"
+              activeDot={{ r: 5, fill: "#ffffff", stroke: "#d97706", strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>
