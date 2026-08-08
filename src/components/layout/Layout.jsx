@@ -18,7 +18,7 @@ export default function Layout({ children, onLogout }) {
     <div className="flex min-h-screen bg-stone-50">
       <Sidebar isOpen={isOpen} onClose={close} />
 
-      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
+      <div className="flex min-h-screen min-w-0 flex-1 flex-col md:pl-[18rem]">
         <Navbar onMenuClick={toggle} onLogout={onLogout} />
 
         <main className="flex-1 px-4 py-6 md:px-6 md:py-8 lg:px-8">

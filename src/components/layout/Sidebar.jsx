@@ -35,7 +35,7 @@ export default function Sidebar({ isOpen, onClose }) {
           fixed inset-y-0 left-0 z-50 w-72 max-w-[18rem] bg-stone-950 text-stone-100 shadow-2xl shadow-stone-950/20
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          md:relative md:translate-x-0 md:flex md:flex-col md:shrink-0
+          md:fixed md:translate-x-0 md:flex md:flex-col md:shrink-0
         `}
       >
         <div className="flex h-full flex-col">
