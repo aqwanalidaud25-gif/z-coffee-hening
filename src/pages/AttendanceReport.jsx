@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { RotateCcw, AlertTriangle, CalendarDays, Users2 } from "lucide-react";
+import { filterAttendanceEntries, summarizeAttendance } from "../utils/attendanceUtils";
 import Layout from "../components/layout/Layout";
 import Button from "../components/ui/Button";
 import PageHeader from "../components/ui/PageHeader";
@@ -10,22 +11,31 @@ export default function AttendanceReport({ onLogout }) {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().slice(0, 10));
+  const [startDate, setStartDate] = useState(new Date().toISOString().slice(0, 10));
+  const [endDate, setEndDate] = useState(new Date().toISOString().slice(0, 10));
+  const [selectedRole, setSelectedRole] = useState("all");
 
   const filteredByDate = useMemo(
     () => report.filter((row) => row.date === selectedDate),
     [report, selectedDate]
   );
 
-  const hadirCount = filteredByDate.filter((row) => row.status === "Hadir").length;
-  const telatCount = filteredByDate.filter((row) => row.status === "Telat").length;
-  const izinCount = filteredByDate.filter((row) => row.status === "Izin").length;
-  const totalCount = filteredByDate.length;
+  const visibleReport = useMemo(() => {
+    const rows = filterAttendanceEntries(report, {
+      startDate,
+      endDate,
+      employee: query,
+      role: selectedRole === "all" ? "" : selectedRole,
+      status: statusFilter,
+    });
+    return rows;
+  }, [endDate, query, report, selectedRole, startDate, statusFilter]);
 
-  const visibleReport = filteredByDate.filter((row) => {
-    const matchesQuery = !query || row.name.toLowerCase().includes(query.toLowerCase());
-    const matchesStatus = statusFilter === "all" || row.status.toLowerCase() === statusFilter;
-    return matchesQuery && matchesStatus;
-  });
+  const summary = useMemo(() => summarizeAttendance(visibleReport), [visibleReport]);
+  const hadirCount = summary.hadir;
+  const telatCount = summary.telat;
+  const izinCount = summary.izin;
+  const totalCount = summary.total;
 
   const handleDownloadReport = () => {
     const headers = ["Nama", "Jabatan", "Status", "Waktu"];
@@ -138,7 +148,7 @@ export default function AttendanceReport({ onLogout }) {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-[1.1fr_0.9fr] md:items-end">
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_1fr_1fr] lg:items-end">
           <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5 shadow-sm">
             <label className="mb-2 block text-sm font-semibold text-stone-700">Cari karyawan</label>
             <input
@@ -148,6 +158,14 @@ export default function AttendanceReport({ onLogout }) {
               disabled={isInitializing}
               className="w-full rounded-3xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700 transition duration-200 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100 disabled:cursor-not-allowed disabled:bg-stone-100"
             />
+          </div>
+
+          <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5 shadow-sm">
+            <label className="mb-2 block text-sm font-semibold text-stone-700">Rentang tanggal</label>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <input type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} className="w-full rounded-3xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700" />
+              <input type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} className="w-full rounded-3xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700" />
+            </div>
           </div>
 
           <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5 shadow-sm">
@@ -172,6 +190,16 @@ export default function AttendanceReport({ onLogout }) {
                   {option.label}
                 </button>
               ))}
+            </div>
+            <div className="mt-4">
+              <label className="mb-2 block text-sm font-semibold text-stone-700">Jabatan</label>
+              <select value={selectedRole} onChange={(event) => setSelectedRole(event.target.value)} className="w-full rounded-3xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700">
+                <option value="all">Semua</option>
+                <option value="Barista">Barista</option>
+                <option value="Kasir">Kasir</option>
+                <option value="Cook">Cook</option>
+                <option value="Runner">Runner</option>
+              </select>
             </div>
           </div>
         </div>

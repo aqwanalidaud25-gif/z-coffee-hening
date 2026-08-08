@@ -7,6 +7,7 @@ import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import AbsensiKaryawan from "./pages/AbsensiKaryawan";
 import AttendanceReport from "./pages/AttendanceReport";
+import DataKaryawan from "./pages/DataKaryawan";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
@@ -21,6 +22,7 @@ function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Dashboard onLogout={logout} />} />
         <Route path="/absensi" element={<AbsensiKaryawan onLogout={logout} />} />
+        <Route path="/data-karyawan" element={<DataKaryawan onLogout={logout} />} />
         <Route path="/transactions" element={<Transactions onLogout={logout} />} />
         <Route path="/inventory" element={<Inventory onLogout={logout} />} />
         <Route path="/customers" element={<Customers onLogout={logout} />} />
