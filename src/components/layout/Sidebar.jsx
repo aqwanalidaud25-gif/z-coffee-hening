@@ -1,12 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { LayoutGrid, Receipt, Package, Users, Settings, X, CalendarCheck2, BarChart3, UserRoundCog } from "lucide-react";
+import { LayoutGrid, Receipt, Package, Users, Settings, X, CalendarCheck2 } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Dashboard", icon: LayoutGrid, to: "/" },
   { label: "Absensi", icon: CalendarCheck2, to: "/absensi" },
-  { label: "Data Karyawan", icon: UserRoundCog, to: "/data-karyawan" },
-  { label: "Laporan Absensi", icon: BarChart3, to: "/attendance-report" },
   { label: "Transaksi", icon: Receipt, to: "/transactions" },
   { label: "Inventaris", icon: Package, to: "/inventory" },
   { label: "Pelanggan", icon: Users, to: "/customers" },

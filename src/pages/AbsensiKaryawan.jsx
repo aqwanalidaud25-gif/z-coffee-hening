@@ -118,7 +118,7 @@ export default function AbsensiKaryawan({ onLogout }) {
       <PageHeader
         subtitle="Absensi"
         title="Pencatatan kehadiran karyawan"
-        description="Verifikasi PIN secara cepat dan catat kedatangan atau kepulangan tim secara real-time."
+        description="Kelola data karyawan, verifikasi PIN, dan lihat ringkasan absensi dari satu layar yang lebih profesional."
         status="Siap pakai"
       />
 
