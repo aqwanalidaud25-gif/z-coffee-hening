@@ -130,10 +130,6 @@ export default function Login() {
                 )}
               </Button>
             </form>
-
-            <p className="mt-5 text-center text-xs text-stone-500">
-              Demo login: admin@zcoffee.id / password123
-            </p>
           </div>
         </div>
       </div>
