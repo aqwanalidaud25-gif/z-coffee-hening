@@ -7,6 +7,8 @@ const initialSettings = [
   { title: "Jam operasional", detail: "07.00 - 22.00" },
   { title: "Metode pembayaran", detail: "QRIS, Cash, E-Wallet" },
   { title: "Notifikasi", detail: "Aktif untuk stok rendah" },
+  { title: "Table management", detail: "Detail pengaturan lainnya" },
+  {title: "Management akses", detail: "Karyawan dan Admin"}
 ];
 
 export default function Settings({ onLogout }) {
