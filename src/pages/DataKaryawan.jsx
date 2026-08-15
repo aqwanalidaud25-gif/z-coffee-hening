@@ -9,7 +9,7 @@ import useAttendance from "../hooks/useAttendance";
 
 export default function DataKaryawan({ onLogout }) {
   const { employees, isInitializing, isSubmitting, error, lastAction, addEmployee, updateEmployee, deleteEmployee } = useAttendance();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(" ");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [employeeName, setEmployeeName] = useState("");
