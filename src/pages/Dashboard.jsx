@@ -28,6 +28,8 @@ export default function Dashboard({ onLogout }) {
     { name: "Americano", qty: "94 cup" },
     { name: "Croissant Coklat", qty: "76 pcs" },
     {name: "Matchalatte", qty: "65 cup"},
+    {name: "Cappucino", qty: "59 cup"},
+    {name: "Kentang goreng", qty: "68pcs"},
   ];
 
   return (
@@ -37,7 +39,7 @@ export default function Dashboard({ onLogout }) {
         title="Z-Coffe-Hening Dashboard"
         description="Pantau pemasukan, transaksi, absensi, dan performa menu favorit dari satu tampilan profesional."
         status="Siap pakai"
-        actions={<Button variant="secondary">Unduh ringkasan</Button>}
+        actions={<Button variant="secondary">Download</Button>}
       />
 
       <div className="rounded-[1.25rem] border border-stone-200 bg-gradient-to-r from-stone-900 to-stone-800 p-6 text-stone-50 shadow-[var(--shadow)]">
@@ -84,7 +86,7 @@ export default function Dashboard({ onLogout }) {
         <div className="rounded-[1.25rem] border border-stone-200 bg-white p-5 shadow-[var(--shadow)]">
           <div className="flex items-center gap-2">
             <Coffee className="h-4 w-4 text-amber-600" />
-            <h3 className="text-sm font-semibold text-stone-900">Menu Terlaris</h3>
+            <h3 className="text-sm font-semibold text-stone-900">Menu BestSaller</h3>
           </div>
           <p className="mt-1 text-xs text-stone-500">Minggu ini</p>
           <div className="mt-4">
