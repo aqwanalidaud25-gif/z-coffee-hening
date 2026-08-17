@@ -27,6 +27,7 @@ export default function Dashboard({ onLogout }) {
     { name: "Kopi Susu Gula Aren", qty: "128 cup" },
     { name: "Americano", qty: "94 cup" },
     { name: "Croissant Coklat", qty: "76 pcs" },
+    {name: "Matchalatte", qty: "65 cup"},
   ];
 
   return (
