@@ -164,7 +164,7 @@ export default function AbsensiKaryawan({ onLogout }) {
                 <tr>
                   <th className="whitespace-nowrap px-4 py-3 font-semibold text-stone-500">ID</th>
                   <th className="px-4 py-3 font-semibold text-stone-500">Nama</th>
-                  <th className="px-4 py-3 font-semibold text-stone-500">Jabatan</th>
+                  <th className="px-4 py-3 font-semibold text-stone-500">Posisi</th>
                   <th className="px-4 py-3 font-semibold text-stone-500">PIN</th>
                   <th className="px-4 py-3 font-semibold text-stone-500">Aksi</th>
                 </tr>

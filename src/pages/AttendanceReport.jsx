@@ -38,7 +38,7 @@ export default function AttendanceReport({ onLogout }) {
   const totalCount = summary.total;
 
   const handleDownloadReport = () => {
-    const headers = ["Nama", "Jabatan", "Status", "Waktu"];
+    const headers = ["Nama", "Posisi", "Status", "Waktu"];
     const rows = visibleReport.map((row) => [row.name, row.role, row.status, row.time]);
     const csvContent = [headers, ...rows].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -192,7 +192,7 @@ export default function AttendanceReport({ onLogout }) {
               ))}
             </div>
             <div className="mt-4">
-              <label className="mb-2 block text-sm font-semibold text-stone-700">Jabatan</label>
+              <label className="mb-2 block text-sm font-semibold text-stone-700">Posisi</label>
               <select value={selectedRole} onChange={(event) => setSelectedRole(event.target.value)} className="w-full rounded-3xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700">
                 <option value="all">Semua</option>
                 <option value="Barista">Barista</option>
@@ -228,7 +228,7 @@ export default function AttendanceReport({ onLogout }) {
                   <tr>
                     <th className="px-4 py-3 font-semibold text-stone-500">Tanggal</th>
                     <th className="px-4 py-3 font-semibold text-stone-500">Nama</th>
-                    <th className="px-4 py-3 font-semibold text-stone-500">Jabatan</th>
+                    <th className="px-4 py-3 font-semibold text-stone-500">posisi</th>
                     <th className="px-4 py-3 font-semibold text-stone-500">Jam</th>
                     <th className="px-4 py-3 font-semibold text-stone-500">Status</th>
                   </tr>
