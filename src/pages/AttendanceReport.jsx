@@ -66,7 +66,7 @@ export default function AttendanceReport({ onLogout }) {
               {isInitializing ? "Memuat ulang..." : "Segarkan data"}
             </Button>
             <Button onClick={handleDownloadReport} disabled={isInitializing || visibleReport.length === 0}>
-              Unduh ringkasan
+              Download
             </Button>
           </div>
         }
