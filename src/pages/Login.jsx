@@ -67,6 +67,7 @@ export default function Login() {
                 "Pantau penjualan real-time",
                 "Notifikasi stok dan transaksi penting",
                 "Layout responsif untuk desktop dan tablet",
+                "Laporan Keuangan Otomatis",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3 text-sm text-stone-200">
                   <ShieldCheck className="h-4 w-4 text-amber-400" />
