@@ -45,7 +45,7 @@ export default function Dashboard({ onLogout }) {
       <div className="rounded-[1.25rem] border border-stone-200 bg-gradient-to-r from-stone-900 to-stone-800 p-6 text-stone-50 shadow-[var(--shadow)]">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-sm font-medium text-amber-300">Senin, 20 Juli 2026</p>
+            <p className="text-sm font-medium text-amber-300">Selasa, 18 agustus 2026</p>
             <h2 className="mt-1 text-2xl font-semibold tracking-tight">Operasional hari ini berjalan lancar</h2>
             <p className="mt-2 max-w-2xl text-sm text-stone-300">
               Pantau pemasukan, transaksi, absensi karyawan, dan performa menu favorit dari satu dashboard yang rapi dan profesional.

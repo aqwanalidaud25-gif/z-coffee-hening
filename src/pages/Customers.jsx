@@ -85,7 +85,7 @@ export default function Customers({ onLogout }) {
               <div className="mt-5 grid gap-3 text-sm text-stone-600">
                 <div className="rounded-[1.5rem] bg-white px-4 py-3">
                   <p className="font-medium text-stone-900">{customer.orders} order</p>
-                  <p className="text-xs text-stone-500">Total pesanan</p>
+                  <p className="text-xs text-stone-500">Total</p>
                 </div>
                 <div className="rounded-[1.5rem] bg-white px-4 py-3">
                   <p className="font-medium text-stone-900">{customer.lastVisit}</p>

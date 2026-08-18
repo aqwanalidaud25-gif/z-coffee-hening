@@ -58,7 +58,7 @@ export default function Transactions({ onLogout }) {
         status="Aktif"
         actions={
           <Button variant="secondary" className="whitespace-nowrap">
-            Export laporan
+            Export
           </Button>
         }
       />

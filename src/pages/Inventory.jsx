@@ -9,6 +9,7 @@ const initialInventory = [
   { item: "Kopi Arabika", stock: "48 kg", status: "Aman" },
   { item: "Susu Oat", stock: "6 liter", status: "Hampir habis" },
   { item: "Cup 12oz", stock: "180 pcs", status: "Aman" },
+  { item: "Matcha powder", stock: "2 kg", status: "perlu restok"},
 ];
 
 export default function Inventory({ onLogout }) {

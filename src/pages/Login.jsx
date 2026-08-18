@@ -57,9 +57,9 @@ export default function Login() {
                 <p className="text-xs uppercase tracking-[0.3em] text-stone-400">Hening</p>
               </div>
             </div>
-            <h1 className="mt-8 text-4xl font-semibold tracking-tight text-white">Kelola kafe dengan lebih terkontrol.</h1>
+            <h1 className="mt-8 text-4xl font-semibold tracking-tight text-white">Kelola kafe dengan lebih terkontrol dan rapi.</h1>
             <p className="mt-4 max-w-md text-sm leading-7 text-stone-300">
-              Pantau pemasukan, kelola stok, dan layani pelanggan dengan dashboard yang terasa premium dan siap dipakai.
+              Pantau pemasukan, kelola stok, dan layani pelanggan dengan nyaman dan tidak ada kesalahan.
             </p>
 
             <div className="mt-10 space-y-3 rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
@@ -78,7 +78,7 @@ export default function Login() {
 
           <div className="p-8 md:p-10">
             <p className="text-sm font-medium text-amber-600">Masuk ke dashboard</p>
-            <h2 className="mt-2 text-2xl font-semibold text-stone-900">Selamat datang, Admin</h2>
+            <h2 className="mt-2 text-2xl font-semibold text-stone-900">Halloo, Admin</h2>
             <p className="mt-2 text-sm text-stone-500">Masukkan kredensial Anda untuk melanjutkan.</p>
 
             <form className="mt-6 space-y-4" onSubmit={handleSubmit} noValidate>
