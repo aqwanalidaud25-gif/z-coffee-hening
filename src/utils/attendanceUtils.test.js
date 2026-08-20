@@ -13,6 +13,7 @@ describe('attendanceUtils', () => {
       { id: 1, name: 'Ayu', role: 'Barista', status: 'Hadir', date: '2026-08-08', clockIn: '08:05', clockOut: '16:00', reason: '—' },
       { id: 2, name: 'Rizki', role: 'Kasir', status: 'Telat', date: '2026-08-08', clockIn: '08:20', clockOut: '16:30', reason: 'acara keluarga' },
       { id: 3, name: 'Nadia', role: 'Cook', status: 'Izin', date: '2026-08-09', clockIn: '—', clockOut: '—', reason: 'Sakit' },
+      {id: 4, name: 'Budi', role: 'Barista', status: 'Hadir', date: '2026-08-10', clockIn: '08:00', clockOut: '16:00', reason: '—' },
     ];
 
     const result = filterAttendanceEntries(rows, {
