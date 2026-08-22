@@ -62,7 +62,7 @@ function CustomTooltip({ active, payload, label }) {
       <p className="mt-1 text-sm font-semibold text-stone-900">
         {formatRupiah(payload[0].value)}
       </p>
-      <p className="text-xs text-stone-500">Pemasukan</p>
+      <p className="text-xs text-stone-500">Income</p>
     </div>
   );
 }
@@ -76,18 +76,18 @@ export default function RevenueChart() {
   const [mode, setMode] = useState("daily");
 
   let chartData = dataDaily;
-  let title = "Pemasukan Harian";
+  let title = "Income Harian";
   let subtitle = "7 hari terakhir";
   let delta = "+4.8%";
 
   if (mode === "weekly") {
     chartData = dataWeekly;
-    title = "Pemasukan Mingguan";
+    title = "Income Mingguan";
     subtitle = "4 minggu terakhir";
     delta = "+12.1%";
   } else if (mode === "monthly") {
     chartData = dataMonthly;
-    title = "Pemasukan Bulanan";
+    title = "Income Bulanan";
     subtitle = "12 bulan terakhir";
     delta = "-2.3%";
   }

@@ -7,7 +7,7 @@ describe('StatCard Component', () => {
   it('renders label, value, delta, and comparison label', () => {
     render(
       <StatCard
-        label="Pemasukan Harian"
+        label="Income Harian"
         value="Rp1.250.000"
         delta="+4,8%"
         isPositive
@@ -25,7 +25,7 @@ describe('StatCard Component', () => {
   it('shows a negative delta with the down arrow style', () => {
     render(
       <StatCard
-        label="Pemasukan Bulanan"
+        label="Income Bulanan"
         value="Rp42.300.000"
         delta="-2,3%"
         isPositive={false}

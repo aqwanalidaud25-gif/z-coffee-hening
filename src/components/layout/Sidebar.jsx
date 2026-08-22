@@ -83,7 +83,7 @@ export default function Sidebar({ isOpen, onClose }) {
           {/* Footer / user */}
           <div className="border-t border-stone-800 px-6 py-5">
             <p className="text-xs text-stone-500">Masuk sebagai</p>
-            <p className="text-sm font-medium text-stone-100">Admin Kasir</p>
+            <p className="text-sm font-medium text-stone-100">Admin</p>
           </div>
         </div>
       </aside>

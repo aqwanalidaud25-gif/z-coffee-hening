@@ -18,13 +18,13 @@ export default function Navbar({ onMenuClick, onLogout }) {
 
   const notifications = [
     {
-      id: 1,
+      id: 2,
       title: "Stok kopi hampir habis",
       message: "Sisa stok Arabika tinggal 6 kg.",
       type: "warning",
     },
     {
-      id: 2,
+      id: 3,
       title: "Transaksi baru masuk",
       message: "2 pesanan baru selesai hari ini.",
       type: "success",
