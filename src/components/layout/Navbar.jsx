@@ -29,6 +29,13 @@ export default function Navbar({ onMenuClick, onLogout }) {
       message: "2 pesanan baru selesai hari ini.",
       type: "success",
     },
+    {
+      id: 4,
+      title: "Pembayaran gagal",
+      message: "Transaksi #12345 gagal diproses.",
+      type: "error",
+    }
+    
   ];
 
   return (
