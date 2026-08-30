@@ -8,6 +8,7 @@ const customersData = [
   { name: "Riko", tier: "Silver", orders: 8, lastVisit: "12 hari lalu", status: "Jarang" },
   { name: "Nina", tier: "Bronze", orders: 5, lastVisit: "1 bulan lalu", status: "Tidak aktif" },
   { name: "Dimas", tier: "silver", orders: 10, lastVisit: "3 hari yang lalu", status: "aktif"},
+  {name: "Sari", tier: "Gold", orders: 20, lastVisit: "1 hari lalu", status: "Aktif"},
 ];
 
 export default function Customers({ onLogout }) {
