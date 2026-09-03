@@ -1,56 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-
-const MOCK_EMPLOYEES = [
-  { id: "E001", name: "Ayu", role: "Barista", pin: "1234" },
-  { id: "E002", name: "Rizki", role: "Kasir", pin: "4321" },
-  { id: "E003", name: "Nadia", role: "Cook", pin: "1111" },
-  { id: "E004", name: "Doni", role: "Runner", pin: "2222" },
-];
-
-const MOCK_REPORT = [
-  {
-    id: 1,
-    employeeId: "E001",
-    name: "Ayu",
-    role: "Barista",
-    status: "Hadir",
-    time: "08:05",
-    date: "2026-07-20",
-    tone: "bg-emerald-50 text-emerald-700",
-  },
-  {
-    id: 2,
-    employeeId: "E002",
-    name: "Rizki",
-    role: "Kasir",
-    status: "Telat",
-    time: "08:18",
-    date: "2026-07-20",
-    tone: "bg-amber-50 text-amber-700",
-  },
-  {
-    id: 3,
-    employeeId: "E003",
-    name: "Nadia",
-    role: "Cook",
-    status: "Izin",
-    time: "—",
-    date: "2026-07-20",
-    tone: "bg-sky-50 text-sky-700",
-  },
-  {
-    id: 4,
-    employeeId: "E004",
-    name: "Doni",
-    role: "Runner",
-    status: "Hadir",
-    time: "07:58",
-    date: "2026-07-20",
-    tone: "bg-emerald-50 text-emerald-700",
-  },
-];
-
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+import { supabase } from "../../supabaseClient"; // Pastikan path ini benar mengarah ke file supabaseClient kamu
 
 export default function useAttendance() {
   const [employees, setEmployees] = useState([]);
@@ -60,29 +9,74 @@ export default function useAttendance() {
   const [error, setError] = useState(null);
   const [lastAction, setLastAction] = useState(null);
 
+  // 1. Fungsi Menarik Data Asli dari Supabase
   const loadInitialData = useCallback(async () => {
     setIsInitializing(true);
     setError(null);
-    await wait(700);
-    setEmployees(MOCK_EMPLOYEES);
-    setReport(MOCK_REPORT);
-    setIsInitializing(false);
+    try {
+      // Tarik data Karyawan
+      const { data: dataKaryawan, error: errKaryawan } = await supabase
+        .from("karyawan")
+        .select("*")
+        .order("id", { ascending: true });
+
+      if (errKaryawan) throw errKaryawan;
+      setEmployees(dataKaryawan || []);
+
+      // Tarik data Absensi
+      const { data: dataAbsensi, error: errAbsensi } = await supabase
+        .from("absensi")
+        .select(`
+          id, status, waktu, tanggal,
+          karyawan ( id, name, role )
+        `)
+        .order("tanggal", { ascending: false })
+        .order("waktu", { ascending: false });
+
+      if (errAbsensi) throw errAbsensi;
+
+      // Format data absensi agar cocok dengan desain UI Dashboard
+      const formattedReport = dataAbsensi?.map((item) => {
+        const tone =
+          item.status === "Hadir"
+            ? "bg-emerald-50 text-emerald-700"
+            : item.status === "Telat"
+              ? "bg-amber-50 text-amber-700"
+              : "bg-slate-50 text-slate-700";
+
+        return {
+          id: item.id,
+          employeeId: item.karyawan?.id,
+          name: item.karyawan?.name || "Karyawan Terhapus",
+          role: item.karyawan?.role || "-",
+          status: item.status,
+          time: item.waktu,
+          date: item.tanggal,
+          tone,
+        };
+      }) || [];
+
+      setReport(formattedReport);
+    } catch (err) {
+      console.error("Gagal memuat data:", err.message);
+      setError("Gagal memuat data dari database.");
+    } finally {
+      setIsInitializing(false);
+    }
   }, []);
 
   useEffect(() => {
-    const t = setTimeout(() => loadInitialData(), 0);
-    return () => clearTimeout(t);
+    loadInitialData();
   }, [loadInitialData]);
 
+  // 2. Verifikasi PIN untuk Absensi
   const verifyPin = useCallback(
     async ({ employeeId, pin }) => {
       setIsSubmitting(true);
       setError(null);
       setLastAction(null);
 
-      await wait(900);
-
-      const employee = employees.find((item) => item.id === employeeId);
+      const employee = employees.find((item) => String(item.id) === String(employeeId));
 
       if (!employee) {
         setIsSubmitting(false);
@@ -90,18 +84,21 @@ export default function useAttendance() {
         return { ok: false, message: "Karyawan tidak ditemukan.", employee: null };
       }
 
-      if (employee.pin !== String(pin)) {
+      if (String(employee.pin) !== String(pin)) {
         setIsSubmitting(false);
         setError("PIN tidak valid. Silakan cek kembali.");
-        return { ok: false, message: "PIN tidak valid. Silakan cek kembali.", employee: null };
+        return { ok: false, message: "PIN tidak valid.", employee: null };
       }
+
+      const now = new Date();
+      const timeLabel = now.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
 
       const result = {
         ok: true,
         message: `PIN valid untuk ${employee.name}.`,
         employee,
         type: "masuk",
-        time: "08:05",
+        time: timeLabel,
       };
 
       setLastAction(result);
@@ -111,179 +108,132 @@ export default function useAttendance() {
     [employees]
   );
 
+  // 3. Simpan Absensi Baru ke Supabase
   const recordAttendance = useCallback(
     async ({ employeeId, type = "masuk" }) => {
       setIsSubmitting(true);
       setError(null);
 
-      await wait(800);
-
-      const employee = employees.find((item) => item.id === employeeId);
-
+      const employee = employees.find((item) => String(item.id) === String(employeeId));
       if (!employee) {
         setIsSubmitting(false);
-        setError("Karyawan tidak ditemukan.");
-        return { ok: false, message: "Karyawan tidak ditemukan.", employee: null };
+        return { ok: false, message: "Karyawan tidak ditemukan." };
       }
 
       const now = new Date();
-      const timeLabel = now.toLocaleTimeString("id-ID", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+      const timeLabel = now.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
       const date = now.toISOString().slice(0, 10);
 
-      const status =
-        type === "masuk"
-          ? timeLabel > "08:00"
-            ? "Telat"
-            : "Hadir"
-          : "Pulang";
-      const tone =
-        status === "Hadir"
-          ? "bg-emerald-50 text-emerald-700"
-          : status === "Telat"
-          ? "bg-amber-50 text-amber-700"
-          : "bg-slate-50 text-slate-700";
+      // Logika Keterlambatan (Batas jam 08:00)
+      const status = type === "masuk" ? (timeLabel > "08:00" ? "Telat" : "Hadir") : "Pulang";
 
-      const newReportItem = {
-        id: Date.now(),
-        employeeId,
-        name: employee.name,
-        role: employee.role,
-        status,
-        time: timeLabel,
-        date,
-        tone,
-      };
+      try {
+        const { error: errInsert } = await supabase
+          .from("absensi")
+          .insert([{ karyawan_id: employee.id, status, waktu: timeLabel, tanggal: date }]);
 
-      setReport((current) => {
-        const existingIndex = current.findIndex((item) => item.employeeId === employeeId && item.date === date);
-        if (existingIndex >= 0) {
-          return current.map((item) =>
-            item.employeeId === employeeId && item.date === date ? { ...item, ...newReportItem } : item
-          );
-        }
-        return [newReportItem, ...current];
-      });
+        if (errInsert) throw errInsert;
 
-      const result = {
-        ok: true,
-        message: `${employee.name} tercatat ${type === "masuk" ? "masuk" : "pulang"} pukul ${timeLabel}.`,
-        employee,
-        type,
-        time: timeLabel,
-      };
+        // Tarik ulang data terbaru dari database
+        await loadInitialData();
 
-      setLastAction(result);
-      setIsSubmitting(false);
-      return result;
+        const result = {
+          ok: true,
+          message: `${employee.name} tercatat ${type} pukul ${timeLabel}.`,
+          employee,
+          type,
+          time: timeLabel,
+        };
+
+        setLastAction(result);
+        setIsSubmitting(false);
+        return result;
+      } catch (err) {
+        setIsSubmitting(false);
+        setError("Gagal mencatat absensi.");
+        return { ok: false, message: "Gagal mencatat absensi." };
+      }
     },
-    [employees]
+    [employees, loadInitialData]
   );
 
+  // 4. Tambah Karyawan Baru ke Supabase
   const addEmployee = useCallback(async ({ name, role, pin }) => {
     setIsSubmitting(true);
     setError(null);
-    setLastAction(null);
+    try {
+      const { data, error: errInsert } = await supabase
+        .from("karyawan")
+        .insert([{ name: name.trim(), role: role.trim(), pin: String(pin).trim() }])
+        .select()
+        .single();
 
-    await wait(600);
+      if (errInsert) throw errInsert;
 
-    if (!name || !role || !pin) {
+      setEmployees((current) => [...current, data]);
+
+      const result = { ok: true, message: `Karyawan ${data.name} berhasil ditambahkan.` };
+      setLastAction(result);
       setIsSubmitting(false);
-      setError("Lengkapi semua data karyawan.");
-      return { ok: false, message: "Lengkapi semua data karyawan." };
+      return result;
+    } catch (err) {
+      setIsSubmitting(false);
+      setError("Gagal menambah karyawan.");
+      return { ok: false };
     }
-
-    const newEmployee = {
-      id: `E${String(Date.now()).slice(-4)}`,
-      name: name.trim(),
-      role: role.trim(),
-      pin: String(pin).trim(),
-    };
-
-    setEmployees((current) => [...current, newEmployee]);
-    const result = {
-      ok: true,
-      message: `Karyawan ${newEmployee.name} berhasil ditambahkan.`,
-      employee: newEmployee,
-      type: "karyawan",
-    };
-
-    setLastAction(result);
-    setIsSubmitting(false);
-    return result;
   }, []);
 
+  // 5. Update Karyawan di Supabase
   const updateEmployee = useCallback(async ({ id, name, role, pin }) => {
     setIsSubmitting(true);
     setError(null);
-    setLastAction(null);
+    try {
+      const { data, error: errUpdate } = await supabase
+        .from("karyawan")
+        .update({ name: name.trim(), role: role.trim(), pin: String(pin).trim() })
+        .eq("id", id)
+        .select()
+        .single();
 
-    await wait(600);
+      if (errUpdate) throw errUpdate;
 
-    if (!id || !name || !role || !pin) {
+      setEmployees((current) => current.map((emp) => (String(emp.id) === String(id) ? data : emp)));
+
+      const result = { ok: true, message: `Data ${data.name} berhasil diperbarui.` };
+      setLastAction(result);
       setIsSubmitting(false);
-      setError("Lengkapi semua data karyawan.");
-      return { ok: false, message: "Lengkapi semua data karyawan." };
+      return result;
+    } catch (err) {
+      setIsSubmitting(false);
+      setError("Gagal memperbarui karyawan.");
+      return { ok: false };
     }
-
-    const updatedEmployee = {
-      id,
-      name: name.trim(),
-      role: role.trim(),
-      pin: String(pin).trim(),
-    };
-
-    setEmployees((current) => current.map((employee) => (employee.id === id ? updatedEmployee : employee)));
-
-    const result = {
-      ok: true,
-      message: `Data karyawan ${updatedEmployee.name} berhasil diperbarui.`,
-      employee: updatedEmployee,
-      type: "karyawan",
-    };
-
-    setLastAction(result);
-    setIsSubmitting(false);
-    return result;
   }, []);
 
+  // 6. Hapus Karyawan dari Supabase
   const deleteEmployee = useCallback(async (employeeId) => {
     setIsSubmitting(true);
     setError(null);
-    setLastAction(null);
+    try {
+      const { error: errDel } = await supabase.from("karyawan").delete().eq("id", employeeId);
+      if (errDel) throw errDel;
 
-    await wait(600);
+      setEmployees((current) => current.filter((emp) => String(emp.id) !== String(employeeId)));
 
-    const employee = employees.find((item) => item.id === employeeId);
-    if (!employee) {
+      const result = { ok: true, message: `Karyawan berhasil dihapus.` };
+      setLastAction(result);
       setIsSubmitting(false);
-      setError("Karyawan tidak ditemukan.");
-      return { ok: false, message: "Karyawan tidak ditemukan." };
+      return result;
+    } catch (err) {
+      setIsSubmitting(false);
+      setError("Gagal menghapus karyawan.");
+      return { ok: false };
     }
-
-    setEmployees((current) => current.filter((item) => item.id !== employeeId));
-
-    const result = {
-      ok: true,
-      message: `Karyawan ${employee.name} berhasil dihapus.`,
-      employee,
-      type: "karyawan",
-    };
-
-    setLastAction(result);
-    setIsSubmitting(false);
-    return result;
-  }, [employees]);
-
-  const refreshReport = useCallback(async () => {
-    setIsInitializing(true);
-    setError(null);
-    await wait(600);
-    setReport(MOCK_REPORT);
-    setIsInitializing(false);
   }, []);
+
+  const refreshReport = useCallback(() => {
+    loadInitialData();
+  }, [loadInitialData]);
 
   return {
     employees,

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
+import Transaksi from "./pages/Transaksi";
 import Inventory from "./pages/Inventory";
 import Customers from "./pages/Customers";
 import Settings from "./pages/Settings";
@@ -21,6 +22,7 @@ function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Dashboard onLogout={logout} />} />
         <Route path="/absensi" element={<AbsensiKaryawan onLogout={logout} />} />
+        <Route path="/kasir" element={<Transaksi onLogout={logout} />} />
         <Route path="/transactions" element={<Transactions onLogout={logout} />} />
         <Route path="/inventory" element={<Inventory onLogout={logout} />} />
         <Route path="/customers" element={<Customers onLogout={logout} />} />

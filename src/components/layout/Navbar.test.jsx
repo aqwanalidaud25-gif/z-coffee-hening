@@ -44,7 +44,7 @@ describe('Navbar Component', () => {
   it('calls onMenuClick when menu button is clicked', async () => {
     const handleMenuClick = vi.fn();
     const user = userEvent.setup();
-    
+
     render(
       <AuthProvider>
         <Navbar onMenuClick={handleMenuClick} onLogout={vi.fn()} />
@@ -53,7 +53,7 @@ describe('Navbar Component', () => {
 
     const menuBtn = screen.getByRole('button', { name: /Buka menu/i });
     await user.click(menuBtn);
-    
+
     expect(handleMenuClick).toHaveBeenCalled();
   });
 

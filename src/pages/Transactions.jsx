@@ -1,16 +1,10 @@
 import { useMemo, useState, useEffect } from "react";
+import { supabase } from "../../supabaseClient"; // Pastikan path ini sesuai dengan letak supabaseClient.js kamu
 import Layout from "../components/layout/Layout";
 import Button from "../components/ui/Button";
 import PageHeader from "../components/ui/PageHeader";
 import Skeleton from "../components/ui/Skeleton";
 import EmptyState from "../components/ui/EmptyState";
-
-const transactionsData = [
-  { id: "#1024", customer: "Alya", total: 96000, status: "Selesai", date: "22 Jul 2026", payment: "QRIS", items: 3 },
-  { id: "#1025", customer: "Riko", total: 124000, status: "Diproses", date: "22 Jul 2026", payment: "Tunai", items: 4 },
-  { id: "#1026", customer: "Nina", total: 78000, status: "Menunggu", date: "21 Jul 2026", payment: "Transfer", items: 2 },
-  { id: "#1027", customer: "Damar", total: 152000, status: "Selesai", date: "21 Jul 2026", payment: "QRIS", items: 5 },
-];
 
 const statusStyles = {
   Selesai: "bg-emerald-100 text-emerald-700",
@@ -29,10 +23,64 @@ function formatRupiah(value) {
 export default function Transactions({ onLogout }) {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [transactionsData, setTransactionsData] = useState([]);
+
+  // Fungsi untuk menarik data dari Supabase
+  const fetchTransactions = async () => {
+    try {
+      setLoading(true);
+
+      // Menarik data transaksi dan menghitung total item dari detail_transaksi
+      const { data, error } = await supabase
+        .from("transaksi")
+        .select(`
+          id,
+          tanggal,
+          total_harga,
+          metode_pembayaran,
+          nama_kasir,
+          detail_transaksi (
+            jumlah_beli
+          )
+        `)
+        .order("tanggal", { ascending: false });
+
+      if (error) throw error;
+
+      // Format data dari database agar sesuai dengan desain UI
+      const formattedData = data.map((item) => {
+        // Hitung total barang dari rincian struk
+        const totalItems = item.detail_transaksi?.reduce((sum, detail) => sum + detail.jumlah_beli, 0) || 0;
+
+        // Format tanggal ke Indonesia (cth: 22 Jul 2026)
+        const dateObj = new Date(item.tanggal);
+        const formattedDate = dateObj.toLocaleDateString("id-ID", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+
+        return {
+          id: `#${item.id}`,
+          customer: `Kasir: ${item.nama_kasir}`, // Sementara pakai nama kasir karena belum ada fitur pilih pelanggan di POS
+          total: item.total_harga,
+          status: "Selesai", // Transaksi POS otomatis selesai
+          date: formattedDate,
+          payment: item.metode_pembayaran || "Tunai",
+          items: totalItems,
+        };
+      });
+
+      setTransactionsData(formattedData);
+    } catch (error) {
+      console.error("Gagal memuat transaksi:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 600);
-    return () => clearTimeout(t);
+    fetchTransactions();
   }, []);
 
   const filteredTransactions = useMemo(() => {
@@ -44,7 +92,7 @@ export default function Transactions({ onLogout }) {
         .toLowerCase()
         .includes(keyword);
     });
-  }, [search]);
+  }, [search, transactionsData]);
 
   const totalRevenue = transactionsData.reduce((sum, item) => sum + item.total, 0);
   const pendingCount = transactionsData.filter((item) => item.status === "Menunggu").length;
@@ -57,8 +105,8 @@ export default function Transactions({ onLogout }) {
         description="Lihat ringkasan omzet, status pesanan, dan temukan transaksi yang perlu ditindaklanjuti dengan cepat."
         status="Aktif"
         actions={
-          <Button variant="secondary" className="whitespace-nowrap">
-            Export laporan
+          <Button variant="secondary" onClick={fetchTransactions} className="whitespace-nowrap">
+            Refresh Data
           </Button>
         }
       />

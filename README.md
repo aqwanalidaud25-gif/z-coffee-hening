@@ -21,7 +21,7 @@ Beberapa perubahan yang sudah diterapkan di aplikasi:
 - Menambahkan halaman login admin dengan validasi form, loading state, error state, dan toggle show/hide password
 - Menambahkan proteksi route agar halaman admin otomatis diarahkan ke halaman login saat belum terautentikasi
 - Menyimpan status login di localStorage agar sesi tetap terjaga saat refresh halaman
-- Menyediakan login demo: admin@zcoffee.id / password123
+- Menyediakan login demo: admin@zcoffee.id / caffee123!@#
 - Menambahkan uji frontend minimal untuk komponen StatCard, halaman Login, dan halaman Dashboard
 - Menambahkan navbar dengan notifikasi, profil admin, dan tombol logout
 - Menambahkan komponen UI reusable seperti button, modal, dialog konfirmasi, empty state, skeleton, dan panel notifikasi

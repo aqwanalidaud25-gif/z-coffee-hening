@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("admin@zcoffee.id");
-  const [password, setPassword] = useState("password123");
+  const [password, setPassword] = useState("caffee123!@#");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,14 +32,13 @@ export default function Login() {
     }
 
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 700));
 
-    const success = login({ email, password });
+    const result = await login({ email, password });
 
-    if (success) {
+    if (result.success) {
       navigate("/", { replace: true });
     } else {
-      setError("Email atau password salah. Coba admin@zcoffee.id dan password123.");
+      setError(result.error || "Email atau password salah. Coba admin@zcoffee.id dan caffee123!@#.");
     }
 
     setLoading(false);
@@ -132,7 +131,7 @@ export default function Login() {
             </form>
 
             <p className="mt-5 text-center text-xs text-stone-500">
-              Demo login: admin@zcoffee.id / password123
+              Demo login: admin@zcoffee.id / caffee123!@#
             </p>
           </div>
         </div>

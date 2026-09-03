@@ -76,7 +76,7 @@ describe('Login Page', () => {
     const passwordInput = screen.getByLabelText('Password');
 
     expect(passwordInput).toHaveAttribute('type', 'password');
-    
+
     await user.click(toggleBtn);
     expect(passwordInput).toHaveAttribute('type', 'text');
   });
@@ -84,6 +84,6 @@ describe('Login Page', () => {
   it('shows demo credentials hint', () => {
     renderLogin();
     expect(screen.getByText(/admin@zcoffee.id/)).toBeInTheDocument();
-    expect(screen.getByText(/password123/)).toBeInTheDocument();
+    expect(screen.getByText(/caffee123!@#/)).toBeInTheDocument();
   });
 });

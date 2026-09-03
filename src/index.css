@@ -81,3 +81,39 @@ textarea {
 ::-webkit-scrollbar-track {
   background: rgba(248, 243, 235, 0.8);
 }
+
+/* Cetak Struk (Thermal Printer) Styles */
+@media print {
+  /* Hide everything else */
+  body * {
+    visibility: hidden;
+  }
+  
+  /* Show only the receipt area */
+  #printable-receipt, #printable-receipt * {
+    visibility: visible;
+  }
+  
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 58mm; /* Ukuran standard thermal printer kecil (bisa diubah ke 80mm jika perlu) */
+    padding: 0;
+    margin: 0;
+    color: black;
+    font-size: 12px; /* Ukuran font disesuaikan untuk mesin kasir */
+    font-family: monospace; /* Font monospace seringkali lebih bagus di printer thermal */
+  }
+
+  /* Hilangkan margin default browser saat print */
+  @page {
+    margin: 0;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
