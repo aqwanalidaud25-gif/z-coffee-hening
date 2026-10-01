@@ -7,8 +7,8 @@ const NAV_ITEMS = [
   { label: "Kasir (POS)", icon: Receipt, to: "/kasir" },
   { label: "Riwayat Transaksi", icon: Receipt, to: "/transactions" },
   { label: "Absensi", icon: CalendarCheck2, to: "/absensi" },
-  { label: "Inventaris", icon: Package, to: "/inventory" },
   { label: "Pelanggan", icon: Users, to: "/customers" },
+  { label: "Inventaris", icon: Package, to: "/inventory" },
   { label: "Pengaturan", icon: Settings, to: "/settings" },
 ];
 

@@ -152,7 +152,7 @@ export default function Dashboard({ onLogout }) {
     <Layout onLogout={onLogout}>
       <PageHeader
         subtitle="Ringkasan operasional"
-        title="Dashboard Z Coffee Hening"
+        title="Z-Coffe-Hening Dashboard"
         description="Pantau pemasukan, transaksi, dan performa menu secara otomatis dan real-time."
         status="Sistem Terhubung"
         actions={<Button variant="secondary">Unduh ringkasan</Button>}
