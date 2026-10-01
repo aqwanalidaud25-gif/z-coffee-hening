@@ -164,7 +164,7 @@ export default function AbsensiKaryawan({ onLogout }) {
                 <tr>
                   <th className="whitespace-nowrap px-4 py-3 font-semibold text-stone-500">ID</th>
                   <th className="px-4 py-3 font-semibold text-stone-500">Nama</th>
-                  <th className="px-4 py-3 font-semibold text-stone-500">Jabatan</th>
+                  <th className="px-4 py-3 font-semibold text-stone-500">Posisi</th>
                   <th className="px-4 py-3 font-semibold text-stone-500">PIN</th>
                   <th className="px-4 py-3 font-semibold text-stone-500">Aksi</th>
                 </tr>
@@ -318,7 +318,7 @@ export default function AbsensiKaryawan({ onLogout }) {
       <div className="rounded-[1.25rem] border border-stone-200 bg-white p-6 shadow-[var(--shadow)] mt-6">
         <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="text-lg font-semibold text-stone-900">Ringkasan Absensi Hari Ini</h3>
+            <h3 className="text-lg font-semibold text-stone-900">Ringkasan Absens Hari Ini</h3>
             <p className="text-sm text-stone-500">Pantau status kehadiran tim dengan cepat.</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
@@ -400,7 +400,7 @@ export default function AbsensiKaryawan({ onLogout }) {
             />
           </div>
           <div>
-            <label className="mb-2 block text-sm font-semibold text-stone-700">Jabatan</label>
+            <label className="mb-2 block text-sm font-semibold text-stone-700">Posisi</label>
             <input
               value={employeeRole}
               onChange={(event) => setEmployeeRole(event.target.value)}

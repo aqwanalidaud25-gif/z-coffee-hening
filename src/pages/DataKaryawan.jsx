@@ -9,7 +9,7 @@ import useAttendance from "../hooks/useAttendance";
 
 export default function DataKaryawan({ onLogout }) {
   const { employees, isInitializing, isSubmitting, error, lastAction, addEmployee, updateEmployee, deleteEmployee } = useAttendance();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(" ");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [employeeName, setEmployeeName] = useState("");
@@ -140,7 +140,7 @@ export default function DataKaryawan({ onLogout }) {
                 <tr>
                   <th className="px-4 py-3 font-semibold text-stone-500">ID</th>
                   <th className="px-4 py-3 font-semibold text-stone-500">Nama</th>
-                  <th className="px-4 py-3 font-semibold text-stone-500">Jabatan</th>
+                  <th className="px-4 py-3 font-semibold text-stone-500">Posisi</th>
                   <th className="px-4 py-3 font-semibold text-stone-500">PIN</th>
                   <th className="px-4 py-3 font-semibold text-stone-500">Aksi</th>
                 </tr>
@@ -187,7 +187,7 @@ export default function DataKaryawan({ onLogout }) {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-stone-700">Jabatan</label>
+            <label className="mb-2 block text-sm font-semibold text-stone-700">Posisi</label>
             <input
               value={employeeRole}
               onChange={(event) => setEmployeeRole(event.target.value)}
