@@ -1,5 +1,5 @@
 # Z Coffee Hening — Dashboard Manajemen Kafe
-
+hallo coppy
 Dashboard manajemen kafe berbasis React, Vite, Tailwind CSS, dan React Router yang dirancang untuk membantu admin memantau operasional harian dengan tampilan yang modern, profesional, dan mudah dikembangkan.
 
 ## Fitur yang tersedia
